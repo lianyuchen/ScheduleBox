@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- created by lianyuchen on 2015/01/10 -->
+    <!-- 没有焦点时的颜色 -->
+    <item android:state_focused="false" android:state_pressed="false" android:color="@color/nav_txt_select"></item>
+    <!-- 非触摸模式下获得焦点并单击时的颜色 -->
+
+    <item android:state_focused="true" android:state_pressed="true" android:color="@color/nav_txt_normal"/>
+    <!-- 触摸模式下单击时的颜色 -->
+
+    <item android:state_focused="false" android:state_pressed="true" android:color="@color/nav_txt_normal"/>
+
+    <!-- 选中时的颜色 -->
+    <item android:state_selected="true" android:color="@color/nav_txt_normal"/>
+
+    <!-- 获得焦点时的颜色 -->
+    <item android:state_focused="true" android:color="@color/nav_txt_normal"/>
+
+</selector>

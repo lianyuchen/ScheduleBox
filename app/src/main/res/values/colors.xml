@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <!--title bar-->
+    <color name="title_bar_background_color">#f6f6f7</color>
+    <!-- 公共的 -->
+    <color name="nav_txt_normal">#BBBBBB</color>
+    <color name="nav_txt_select">#FF9900</color>
+    <color name="gray">#888888</color>
+    <color name="btn_blue_pressed_color">#459be6</color>
+    <color name="btn_text_blue_color">#FF58A4E7</color>
+    <color name="btn_blue_unable_color">#bcc5d2</color>
+    <color name="icon_grey_color">#FF585656</color>
+    <color name="normal_background">#f0f4fa</color>
+    <color name="btn_border_grey_color">#c2c7cc</color>
+    <color name="btn_grey_pressed_color">#eff1f4</color>
+</resources>

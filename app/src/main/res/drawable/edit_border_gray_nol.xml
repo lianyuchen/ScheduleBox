@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- created by lianyuchen on 2015/01/10 -->
+    <!-- 边框颜色值 -->
+    <item>
+        <shape>
+
+            <!-- 边框为浅灰色 -->
+            <solid android:color="#ffc8c8c8" />
+            <!-- 边框的圆弧度 -->
+            <corners android:radius="5dp" />
+        </shape>
+    </item>
+    <!-- 主体背景颜色值 -->
+    <!-- 设置边距控制边框的粗细 -->
+    <item
+        android:bottom="1.5dp"
+        android:left="1.5dp"
+        android:right="1.5dp"
+        android:top="1.5dp">
+        <shape>
+
+            <!-- 内容主体颜色为白色 -->
+            <solid android:color="#ffffffff" />
+
+            <!-- 内部边框距离文字的间距 -->
+            <padding
+                android:bottom="15dp"
+                android:left="10dp"
+                android:right="10dp"
+                android:top="15dp" />
+            <!-- 内部边框的圆弧度    必须与外部边框圆弧度一致 -->
+            <corners android:radius="5dp" />
+        </shape>
+    </item>
+
+</layer-list>

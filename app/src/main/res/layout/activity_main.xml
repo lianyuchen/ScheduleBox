@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <include android:id="@+id/include_title"
+        layout="@layout/title_bar_view"
+        />
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/include_title"
+        android:layout_above="@+id/rg_menu"
+        android:layout_alignParentStart="true"></FrameLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:layout_above="@id/rg_menu"
+        android:background="#b2b2b2" />
+    <RadioGroup
+        android:id="@+id/rg_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:paddingTop="10dp">
+
+        <RadioButton
+            android:id="@+id/rb_menu_school"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:textSize="12sp"
+            android:drawableTop="@drawable/selector_btn_info_bg"
+            android:gravity="center"
+            android:text="心情" />
+
+        <RadioButton
+            android:id="@+id/rb_menu_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:drawableTop="@drawable/selector_btn_course_bg"
+            android:text="日程" />
+
+        <RadioButton
+            android:id="@+id/rb_menu_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:button="@null"
+            android:drawableTop="@drawable/selector_btn_user_bg"
+            android:gravity="center"
+            android:text="个人" />
+
+    </RadioGroup>
+</RelativeLayout>

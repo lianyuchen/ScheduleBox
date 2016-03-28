@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lyc.schedulebox.ui.activity.WelcomeActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon"
+            android:layout_marginBottom="20dp"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/tv_app"
+            android:layout_below="@+id/iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ScheduleBox"
+            android:textSize="16sp"
+            android:textColor="@color/gray"
+            android:layout_centerHorizontal="true"
+            android:textAppearance="@style/TextViewCustomFont"/>
+        <TextView
+            android:layout_below="@+id/tv_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="日程盒子"
+            android:textSize="26sp"
+            android:textColor="@color/icon_grey_color"
+            android:layout_centerHorizontal="true"
+            android:textAppearance="@style/TextViewCustomFont"/>
+    </RelativeLayout>
+
+</RelativeLayout>
