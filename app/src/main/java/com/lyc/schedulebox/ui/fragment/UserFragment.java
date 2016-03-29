@@ -1,5 +1,7 @@
 package com.lyc.schedulebox.ui.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +10,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.lyc.schedulebox.R;
+import com.lyc.schedulebox.presenter.IUserLogoutPresenter;
+import com.lyc.schedulebox.presenter.impl.UserPresenterImpl;
+import com.lyc.schedulebox.ui.activity.LoginActivity;
 import com.lyc.schedulebox.utils.SharedPreferenceUtils;
 import com.lyc.schedulebox.utils.logutils.LogUtils;
+import com.lyc.schedulebox.view.ILogoutView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,7 +25,7 @@ import butterknife.OnClick;
 /**
  * Created by lianyuchen on 15/12/30.
  */
-public class UserFragment extends BaseFragment {
+public class UserFragment extends BaseFragment implements ILogoutView{
     @Bind(R.id.btn_logout)
     Button btnLogout;
     @Bind(R.id.tv_username)
@@ -27,6 +33,7 @@ public class UserFragment extends BaseFragment {
     @Bind(R.id.tv_user_gender)
     TextView tvUserGender;
     private View mViews = null;
+    private IUserLogoutPresenter mUserLogoutPresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +51,7 @@ public class UserFragment extends BaseFragment {
     }
 
     private void init() {
+        mUserLogoutPresenter = new UserPresenterImpl(this);
         if (null != SharedPreferenceUtils.getSharedPreferences(getActivity(),"login_info")) {
             if (SharedPreferenceUtils.getValue(getActivity(),"login_info","haveUserInfo",false)) {
                 tvUsername.setText(SharedPreferenceUtils.getValue(getActivity(),"login_info","username",""));
@@ -65,8 +73,8 @@ public class UserFragment extends BaseFragment {
 
     @OnClick(R.id.btn_logout)
     public void logout() {
-//        Intent intent = new Intent(getActivity(), LoginActivity.class);
-//        startActivity(intent);
+
+        mUserLogoutPresenter.doLogout();
     }
 
     @Override
@@ -75,4 +83,16 @@ public class UserFragment extends BaseFragment {
 //        LogUtils.i("UserFragment","onResume()");
         init();
     }
+
+    @Override
+    public void jump2Login() {
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public Context getActivityContext() {
+        return this.getActivity();
+    }
+
 }

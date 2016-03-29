@@ -7,9 +7,8 @@ import android.widget.EditText;
 
 import com.cxyw.suyun.common.net.model.ErrorObj;
 import com.lyc.schedulebox.R;
-import com.lyc.schedulebox.logic.model.UserInfoModel;
 import com.lyc.schedulebox.presenter.IUserLoginPresenter;
-import com.lyc.schedulebox.presenter.impl.UserLoginPresenterImpl;
+import com.lyc.schedulebox.presenter.impl.UserPresenterImpl;
 import com.lyc.schedulebox.utils.SharedPreferenceUtils;
 import com.lyc.schedulebox.view.ILoginView;
 
@@ -37,7 +36,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     }
 
     private void init() {
-        mUserLoginPresenter = new UserLoginPresenterImpl(this);
+        mUserLoginPresenter = new UserPresenterImpl(this);
         if (null != SharedPreferenceUtils.getSharedPreferences(this,"login_info")) {
             SharedPreferenceUtils.getEditor(this,"login_info").clear().commit();
         }
@@ -63,17 +62,6 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     public String getUserPassword() {
         return etPassword.getText().toString().trim();
-    }
-
-    @Override
-    public void saveUserInfo(UserInfoModel bean) {
-        SharedPreferenceUtils.putValue(this,"login_info","username",bean.getObj().getUserName());
-        SharedPreferenceUtils.putValue(this,"login_info","password",bean.getObj().getUserPwd());
-        SharedPreferenceUtils.putValue(this,"login_info","uuid",bean.getObj().getUserUUID());
-        SharedPreferenceUtils.putValue(this,"login_info","userId",bean.getObj().getUserId());
-        SharedPreferenceUtils.putValue(this,"login_info","haveUserInfo",true);
-
-
     }
 
     @Override
