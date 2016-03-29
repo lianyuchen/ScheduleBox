@@ -53,7 +53,7 @@ public class UserFragment extends BaseFragment implements ILogoutView{
     private void init() {
         mUserLogoutPresenter = new UserPresenterImpl(this);
         if (null != SharedPreferenceUtils.getSharedPreferences(getActivity(),"login_info")) {
-            if (SharedPreferenceUtils.getValue(getActivity(),"login_info","haveUserInfo",false)) {
+            if (SharedPreferenceUtils.getValue(getActivity(),"login_info","isLogin",false)) {
                 tvUsername.setText(SharedPreferenceUtils.getValue(getActivity(),"login_info","username",""));
                 tvUserGender.setText(SharedPreferenceUtils.getValue(getActivity(),"login_info","phone",""));
             } else {

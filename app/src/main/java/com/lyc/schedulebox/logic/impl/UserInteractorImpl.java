@@ -38,7 +38,7 @@ public class UserInteractorImpl implements IUserLoginInteractor, IUserLogoutInte
                 SharedPreferenceUtils.putValue(context,"login_info","password",result.getObj().getUserPwd());
                 SharedPreferenceUtils.putValue(context,"login_info","uuid",result.getObj().getUserUUID());
                 SharedPreferenceUtils.putValue(context,"login_info","userId",result.getObj().getUserId());
-                SharedPreferenceUtils.putValue(context,"login_info","haveUserInfo",true);
+                SharedPreferenceUtils.putValue(context,"login_info","isLogin",true);
                 listener.getUserInfoSuccess(result);
             }
 
@@ -60,8 +60,7 @@ public class UserInteractorImpl implements IUserLoginInteractor, IUserLogoutInte
         if (null == SharedPreferenceUtils.getSharedPreferences(context,"login_info")) {
             listener.clearUserInfoFailed();
         }else {
-            SharedPreferenceUtils.getEditor(context,"login_info").clear().commit();
-            SharedPreferenceUtils.putValue(context,"login_info","haveUserInfo",false);
+            SharedPreferenceUtils.putValue(context,"login_info","isLogin",false);
             listener.clearUserInfoSuccess();
         }
     }

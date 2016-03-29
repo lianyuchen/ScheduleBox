@@ -22,7 +22,7 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void run() {
                 if (null != SharedPreferenceUtils.getSharedPreferences(WelcomeActivity.this,"login_info")) {
-                    if (SharedPreferenceUtils.getValue(WelcomeActivity.this,"login_info","haveUserInfo",false)) {
+                    if (SharedPreferenceUtils.getValue(WelcomeActivity.this,"login_info","isLogin",false)) {
                         intent = new Intent(WelcomeActivity.this, MainActivity.class);
                         startActivity(intent);
                         WelcomeActivity.this.finish();
