@@ -42,6 +42,24 @@ public class ScheduleListBean extends BaseModel{
             private int scheduleId;
             private boolean scheduleIsFinished;
             private String scheduleStartTime;
+            private String scheduleType;
+            private String scheduleColor;
+
+            public String getScheduleColor() {
+                return scheduleColor;
+            }
+
+            public void setScheduleColor(String scheduleColor) {
+                this.scheduleColor = scheduleColor;
+            }
+
+            public String getScheduleType() {
+                return scheduleType;
+            }
+
+            public void setScheduleType(String scheduleType) {
+                this.scheduleType = scheduleType;
+            }
 
             public void setScheduleContent(String scheduleContent) {
                 this.scheduleContent = scheduleContent;
