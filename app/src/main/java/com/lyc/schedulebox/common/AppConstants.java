@@ -13,4 +13,5 @@ public class AppConstants {
     public final static String WEB_HOST = "http://139.129.46.64:8080/ScheduleBoxServer_war";
     public final static String URL_GET_SCHEDULE_LIST = WEB_HOST + "/SearchScheduleByTimeServlet";
     public final static String URL_GET_USER_INFO = WEB_HOST + "/UserLoginServlet";
+    public final static String URL_ADD_SCHEDULE = WEB_HOST + "/SubmitScheduleServlet";
 }

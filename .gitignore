@@ -2,6 +2,8 @@
 # Built application files
 *.apk
 *.ap_
+/common/build
+/WeekView_library/build
 *.idea
 
 # Files for the Dalvik VM

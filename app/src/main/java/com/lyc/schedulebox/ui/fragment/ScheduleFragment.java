@@ -42,7 +42,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
     private ISchedulePresenter mSchedulePresenter;
     private List<WeekViewEvent> events = new ArrayList<>();
     private int userId = -1;
-    private String last7Day,behind7Day;
+    private String last7Day, behind7Day;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
     private void init() {
         getUserInfo();
         mSchedulePresenter = new SchedulePresenterImpl(this);
-        mSchedulePresenter.showSchedule(userId,last7Day,behind7Day);
+        mSchedulePresenter.showSchedule(userId, last7Day, behind7Day);
         weekView.setEventLongPressListener(this);
         weekView.setOnEventClickListener(this);
         weekView.setMonthChangeListener(this);
@@ -74,14 +74,14 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
     }
 
     private void getUserInfo() {
-        userId = SharedPreferenceUtils.getValue(getActivity(),"login_info","userId",-1);
+        userId = SharedPreferenceUtils.getValue(getActivity(), "login_info", "userId", -1);
         Calendar start = Calendar.getInstance();
-        start.add(Calendar.DATE,-7);
+        start.add(Calendar.DATE, -7);
         Calendar end = Calendar.getInstance();
-        end.add(Calendar.DATE,+7);
+        end.add(Calendar.DATE, +7);
         last7Day = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(start.getTime());
         behind7Day = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(end.getTime());
-        LogUtils.i(last7Day+"--"+behind7Day);
+        LogUtils.i(last7Day + "--" + behind7Day);
     }
 
     @Override
@@ -119,10 +119,11 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
     @Override
     public void onEmptyViewLongPress(Calendar time) {
 
-        String startTime = time.get(Calendar.YEAR) +"-"+ time.get(Calendar.MONTH)+1 +"-"+ time.get(Calendar.DAY_OF_MONTH);
+        String startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(time.getTime());
         LogUtils.i(startTime);
         Intent intent = new Intent(getActivity(), AddScheduleActivity.class);
-        startActivityForResult(intent,1);
+        intent.putExtra("startTime",startTime);
+        startActivityForResult(intent, 1);
 //        Toast.makeText(getActivity(), String.format("" + time.get(Calendar.HOUR_OF_DAY)) + ":" +
 //                String.format("" + time.get(Calendar.MINUTE)), Toast.LENGTH_SHORT).show();
     }
@@ -163,4 +164,14 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        init();
+    }
 }
