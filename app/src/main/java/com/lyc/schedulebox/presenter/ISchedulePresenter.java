@@ -5,5 +5,5 @@ package com.lyc.schedulebox.presenter;
  */
 public interface ISchedulePresenter {
 
-    void showSchedule();
+    void showSchedule(int userId,String start,String end);
 }

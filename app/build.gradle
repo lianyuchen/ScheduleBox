@@ -34,8 +34,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.alibaba:fastjson:1.2.7'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile files('libs/android-async-http-1.4.7.jar')
     compile project(path: ':WeekView_library')
     compile project(path: ':common')
-    compile project(path: ':calligraphy')
+    compile 'uk.co.chrisjenx:calligraphy:2.1.0'
+    compile 'com.bigkoo:pickerview:2.0.8'
 }

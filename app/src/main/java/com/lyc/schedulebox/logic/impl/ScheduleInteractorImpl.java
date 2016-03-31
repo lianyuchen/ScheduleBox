@@ -31,13 +31,17 @@ public class ScheduleInteractorImpl implements IScheduleInteractor {
                 //LogUtils.i(result.getObj().getList().get(0).getScheduleStartTime());
                 List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
                 List<ScheduleListBean.ObjEntity.ListEntity> list = result.getObj().getList();
-                for (int i = 0; i < list.size(); i++) {
-                    ScheduleListBean.ObjEntity.ListEntity bean = list.get(i);
+                if (list.size() > 0) {
+                    for (int i = 0; i < list.size(); i++) {
+                        ScheduleListBean.ObjEntity.ListEntity bean = list.get(i);
 
-                    events.add(ModelUtils.toWeekViewEvent(bean));
+                        events.add(ModelUtils.toWeekViewEvent(bean));
 
+                    }
+                    listener.getScheduleListSuccess(events);
+                }else {
+                    listener.getScheduleFailed(new ErrorObj(result.getCode(),result.getCodeMsg()));
                 }
-                listener.getScheduleListSuccess(events);
 
             }
 

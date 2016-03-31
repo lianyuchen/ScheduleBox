@@ -24,8 +24,8 @@ public class SchedulePresenterImpl implements ISchedulePresenter,GetScheduleList
     }
 
     @Override
-    public void showSchedule() {
-        mScheduleInteractor.getSchedule("5","2016-03-16 00:00:00","2016-03-24 23:59:59", this);
+    public void showSchedule(int userId,String start,String end) {
+        mScheduleInteractor.getSchedule(userId+"", start, end, this);
     }
 
     @Override

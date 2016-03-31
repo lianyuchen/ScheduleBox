@@ -88,6 +88,7 @@ public class UserFragment extends BaseFragment implements ILogoutView{
     public void jump2Login() {
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
+        getActivity().finish();
     }
 
     @Override

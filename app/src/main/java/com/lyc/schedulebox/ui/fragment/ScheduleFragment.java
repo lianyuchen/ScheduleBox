@@ -1,5 +1,6 @@
 package com.lyc.schedulebox.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import com.alamkanak.weekview.WeekViewEvent;
 import com.lyc.schedulebox.R;
 import com.lyc.schedulebox.presenter.ISchedulePresenter;
 import com.lyc.schedulebox.presenter.impl.SchedulePresenterImpl;
+import com.lyc.schedulebox.ui.activity.AddScheduleActivity;
+import com.lyc.schedulebox.utils.SharedPreferenceUtils;
 import com.lyc.schedulebox.utils.logutils.LogUtils;
 import com.lyc.schedulebox.view.IScheduleFragView;
 
@@ -30,13 +33,16 @@ import butterknife.ButterKnife;
  * Created by lianyuchen on 15/12/30.
  */
 public class ScheduleFragment extends BaseFragment implements IScheduleFragView, MonthLoader.MonthChangeListener,
-        WeekView.EventClickListener,WeekView.EventLongPressListener, WeekView.EmptyViewClickListener {
+        WeekView.EventClickListener, WeekView.EventLongPressListener, WeekView.EmptyViewClickListener,
+        WeekView.EmptyViewLongPressListener {
 
     @Bind(R.id.weekView)
     WeekView weekView;
     private View mViews = null;
     private ISchedulePresenter mSchedulePresenter;
     private List<WeekViewEvent> events = new ArrayList<>();
+    private int userId = -1;
+    private String last7Day,behind7Day;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,15 +60,28 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
     }
 
     private void init() {
+        getUserInfo();
         mSchedulePresenter = new SchedulePresenterImpl(this);
-        mSchedulePresenter.showSchedule();
+        mSchedulePresenter.showSchedule(userId,last7Day,behind7Day);
         weekView.setEventLongPressListener(this);
         weekView.setOnEventClickListener(this);
         weekView.setMonthChangeListener(this);
         weekView.setEmptyViewClickListener(this);
+        weekView.setEmptyViewLongPressListener(this);
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
         setupDateTimeInterpreter(false);
+    }
+
+    private void getUserInfo() {
+        userId = SharedPreferenceUtils.getValue(getActivity(),"login_info","userId",-1);
+        Calendar start = Calendar.getInstance();
+        start.add(Calendar.DATE,-7);
+        Calendar end = Calendar.getInstance();
+        end.add(Calendar.DATE,+7);
+        last7Day = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(start.getTime());
+        behind7Day = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(end.getTime());
+        LogUtils.i(last7Day+"--"+behind7Day);
     }
 
     @Override
@@ -81,17 +100,31 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
 
+        Toast.makeText(getActivity(), event.getName(), Toast.LENGTH_SHORT).show();
     }
 
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
 
+        Toast.makeText(getActivity(), event.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onEmptyViewClicked(Calendar time) {
-        Toast.makeText(getActivity(),String.format(""+time.get(Calendar.HOUR_OF_DAY)) + String.format(""+time.get(Calendar.MINUTE)),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), String.format("" + time.get(Calendar.HOUR_OF_DAY)) + ":" +
+                String.format("" + time.get(Calendar.MINUTE)), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onEmptyViewLongPress(Calendar time) {
+
+        String startTime = time.get(Calendar.YEAR) +"-"+ time.get(Calendar.MONTH)+1 +"-"+ time.get(Calendar.DAY_OF_MONTH);
+        LogUtils.i(startTime);
+        Intent intent = new Intent(getActivity(), AddScheduleActivity.class);
+        startActivityForResult(intent,1);
+//        Toast.makeText(getActivity(), String.format("" + time.get(Calendar.HOUR_OF_DAY)) + ":" +
+//                String.format("" + time.get(Calendar.MINUTE)), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -104,6 +137,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
     /**
      * Set up a date time interpreter which will show short date values when in week view and long
      * date values otherwise.
+     *
      * @param shortDate True if the date values should be short.
      */
     private void setupDateTimeInterpreter(final boolean shortDate) {

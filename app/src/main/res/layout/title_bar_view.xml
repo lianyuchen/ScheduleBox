@@ -16,7 +16,7 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="标题"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
 
         <ImageButton
             android:id="@+id/ib_back"
