@@ -1,2 +1,2 @@
-include ':app', ':WeekView_library', ':common', 'calligraphy'
+include ':app', ':WeekView_library', ':common'
 
