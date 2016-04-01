@@ -16,4 +16,7 @@ public interface IAddScheduleView {
     int getUserId();
 
     String getScheduleContent();
+
+    String getScheduleColor();
+
 }

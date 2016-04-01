@@ -59,7 +59,8 @@ public class SchedulePresenterImpl implements ISchedulePresenter, GetScheduleLis
     public void addSchedule() {
         mAddScheduleInteractor.addSchedule(mAddScheduleView.getUserId() + "",
                 mAddScheduleView.getStartTime(), mAddScheduleView.getEndTime(),
-                mAddScheduleView.getScheduleType(), mAddScheduleView.getScheduleContent(), this);
+                mAddScheduleView.getScheduleType(), mAddScheduleView.getScheduleContent(),
+                mAddScheduleView.getScheduleColor(), this);
     }
 
     @Override

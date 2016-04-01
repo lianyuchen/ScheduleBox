@@ -7,5 +7,6 @@ import com.lyc.schedulebox.logic.listener.AddScheduleListener;
  */
 public interface IAddScheduleInteractor {
 
-    void addSchedule(String userId, String start, String end, String scheduleType, String conten, AddScheduleListener listener);
+    void addSchedule(String userId, String start, String end, String scheduleType, String content,
+                     String color, AddScheduleListener listener);
 }

@@ -61,13 +61,14 @@ public class ScheduleInteractorImpl implements IScheduleInteractor, IAddSchedule
     }
 
     @Override
-    public void addSchedule(String userId, String start, String end, String scheduleType, String conten, final AddScheduleListener listener) {
+    public void addSchedule(String userId, String start, String end, String scheduleType, String content, String color, final AddScheduleListener listener) {
         RequestParams params = new RequestParams();
         params.setRequestString("scheduleType", scheduleType);
-        params.setRequestString("scheduleContent", conten);
+        params.setRequestString("scheduleContent", content);
         params.setRequestString("scheduleStartTime", start);
         params.setRequestString("scheduleEndTime", end);
         params.setRequestString("userId", userId);
+        params.setRequestString("scheduleColor",color);
         NetworkHelper.getInstance().post(AppConstants.URL_ADD_SCHEDULE, params, new IRequestCallBack<BaseModel>() {
             @Override
             public void onSuccess(BaseModel result) {

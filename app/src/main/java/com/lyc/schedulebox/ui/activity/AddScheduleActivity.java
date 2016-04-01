@@ -43,9 +43,14 @@ public class AddScheduleActivity extends BaseActivity implements IAddScheduleVie
     Button btnAdd;
     @Bind(R.id.et_content)
     EditText etContent;
+    @Bind(R.id.tv_schedule_color)
+    TextView tvScheduleColor;
+    @Bind(R.id.ll_schedule_color)
+    LinearLayout llScheduleColor;
     private TimePickerView timePickerView;
-    private OptionsPickerView optionsPickerView;
-    private ArrayList<String> optionsItems = new ArrayList<String>();
+    private OptionsPickerView optionsPickerView, colorOptionsPickerView;
+    private ArrayList<String> optionsItems = new ArrayList<>();
+    private ArrayList<String> colorOptionsItems = new ArrayList<>();
     private IAddSchedulePresenter mAddSchedulePresenter;
 
     @Override
@@ -61,6 +66,38 @@ public class AddScheduleActivity extends BaseActivity implements IAddScheduleVie
         initTitleBar();
         setTitleBarText("新建日程");
         tvStartTime.setText(getIntent().getStringExtra("startTime").toString());
+
+        setTimePicker();
+        setTypeOptionsPicker();
+        setColorOptionsPicker();
+
+    }
+
+    /**
+     * 设置颜色的选项选择器
+     */
+    private void setColorOptionsPicker() {
+
+        colorOptionsItems.add("高");
+        colorOptionsItems.add("中");
+        colorOptionsItems.add("低");
+
+        colorOptionsPickerView = new OptionsPickerView(this);
+        colorOptionsPickerView.setPicker(colorOptionsItems);
+        colorOptionsPickerView.setCyclic(false);
+        colorOptionsPickerView.setSelectOptions(1);
+        colorOptionsPickerView.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                tvScheduleColor.setText(colorOptionsItems.get(options1));
+            }
+        });
+    }
+
+    /**
+     * 设置时间选择器
+     */
+    private void setTimePicker() {
         //时间选择器
         timePickerView = new TimePickerView(this, TimePickerView.Type.ALL);
         timePickerView.setTime(new Date());
@@ -75,7 +112,12 @@ public class AddScheduleActivity extends BaseActivity implements IAddScheduleVie
                 tvEndTime.setText(getTime(date));
             }
         });
+    }
 
+    /**
+     * 设置类型的选项选择器
+     */
+    private void setTypeOptionsPicker() {
         optionsItems.add("游玩");
         optionsItems.add("出差");
         optionsItems.add("运动");
@@ -97,7 +139,8 @@ public class AddScheduleActivity extends BaseActivity implements IAddScheduleVie
         return format.format(date);
     }
 
-    @OnClick({R.id.ll_end_time, R.id.ll_schedule_type, R.id.tv_end_time, R.id.btn_add})
+    @OnClick({R.id.ll_end_time, R.id.ll_schedule_type, R.id.tv_end_time, R.id.btn_add,
+            R.id.tv_schedule_color, R.id.ll_schedule_color})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_end_time:
@@ -112,6 +155,12 @@ public class AddScheduleActivity extends BaseActivity implements IAddScheduleVie
             case R.id.btn_add:
                 mAddSchedulePresenter = new SchedulePresenterImpl(this);
                 mAddSchedulePresenter.addSchedule();
+                break;
+            case R.id.tv_schedule_color:
+                colorOptionsPickerView.show();
+                break;
+            case R.id.ll_schedule_color:
+                colorOptionsPickerView.show();
                 break;
         }
     }
@@ -134,7 +183,7 @@ public class AddScheduleActivity extends BaseActivity implements IAddScheduleVie
     @Override
     public void completeAddSchedule() {
 
-        Toast.makeText(this,"添加成功！",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "添加成功！", Toast.LENGTH_SHORT).show();
         this.finish();
     }
 
@@ -146,5 +195,19 @@ public class AddScheduleActivity extends BaseActivity implements IAddScheduleVie
     @Override
     public String getScheduleContent() {
         return etContent.getText().toString().trim();
+    }
+
+    @Override
+    public String getScheduleColor() {
+        String text, defColor = "";
+        text = tvScheduleColor.getText().toString().trim();
+        if ("高".equals(text)) {
+            defColor = "#EA0000";
+        } else if ("中".equals(text)) {
+            defColor = "#C6A300";
+        } else if ("低".equals(text)) {
+            defColor = "#66B3FF";
+        }
+        return defColor;
     }
 }
