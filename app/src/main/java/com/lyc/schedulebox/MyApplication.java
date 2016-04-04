@@ -3,6 +3,9 @@ package com.lyc.schedulebox;
 import android.content.Context;
 
 import com.cxyw.suyun.common.utils.CommonApplication;
+import com.lyc.schedulebox.common.AppConstants;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -12,6 +15,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class MyApplication extends CommonApplication {
     private static MyApplication app;
     private static Context mContext;// 全局context
+
+    public static IWXAPI api;
     public static MyApplication getInstance() {
         return app;
     }
@@ -27,6 +32,15 @@ public class MyApplication extends CommonApplication {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+
+        regToWX();
+        
+    }
+
+    private void regToWX() {
+        api = WXAPIFactory.createWXAPI(this, AppConstants.APP_ID, true);
+
+        api.registerApp(AppConstants.APP_ID);
     }
 
     public static Context getScheduleBoxApplicationContext() {

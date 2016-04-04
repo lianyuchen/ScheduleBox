@@ -6,6 +6,9 @@ package com.lyc.schedulebox.common;
 public class AppConstants {
 
     public static String ApkName = "scheduleBox";
+
+    //微信分享appId
+    public final static String APP_ID = "wxa77b06b23d872eaf";
     //genymotion模拟器访问本地tomcat的地址：10.0.3.2：8080
     /**
      * 阿里云服务器地址：139.126.46.64
