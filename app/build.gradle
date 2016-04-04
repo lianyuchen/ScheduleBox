@@ -39,4 +39,5 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.bigkoo:pickerview:2.0.8'
     compile files('src/lib/libammsdk.jar')
+    compile 'com.bigkoo:convenientbanner:2.0.5'
 }

@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
  */
 public class ScheduleFragment extends BaseFragment implements IScheduleFragView, MonthLoader.MonthChangeListener,
         WeekView.EventClickListener, WeekView.EventLongPressListener, WeekView.EmptyViewClickListener,
-        WeekView.EmptyViewLongPressListener {
+        WeekView.EmptyViewLongPressListener, View.OnClickListener {
 
     @Bind(R.id.weekView)
     WeekView weekView;
@@ -61,6 +61,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
 
     private void init() {
         getUserInfo();
+        getActivity().findViewById(R.id.tv_title).setOnClickListener(this);
         mSchedulePresenter = new SchedulePresenterImpl(this);
         mSchedulePresenter.showSchedule(userId, last7Day, behind7Day);
         weekView.setEventLongPressListener(this);
@@ -184,5 +185,10 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
     public void onResume() {
         super.onResume();
         init();
+    }
+
+    @Override
+    public void onClick(View v) {
+        weekView.goToToday();
     }
 }
