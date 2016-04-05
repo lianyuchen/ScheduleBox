@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="bottom"
                 android:text="Schedule Box"
                 android:textAppearance="@style/TextViewCustomFont"
                 android:textColor="@color/gray"
@@ -48,7 +48,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:text="日程盒子"
+                android:paddingBottom="5dp"
                 android:textAppearance="@style/TextViewCustomFont"
                 android:textColor="@color/icon_grey_color"
                 android:textSize="26sp" />
