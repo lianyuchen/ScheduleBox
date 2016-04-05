@@ -3,9 +3,15 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         debugConfig {
-            keyAlias 'schedule_box'
+            keyAlias 'ScheduleBox'
             keyPassword '123456'
-            storeFile file('/Users/lianyuchen/Documents/keystore/schedule_box.jks')
+            storeFile file('/Users/lianyuchen/Documents/keystore/schedule_box_debug.jks')
+            storePassword '123456'
+        }
+        releaseConfig {
+            keyAlias 'ScheduleBox'
+            keyPassword '123456'
+            storeFile file('/Users/lianyuchen/Documents/keystore/schedule_box_release.jks')
             storePassword '123456'
         }
     }
@@ -22,6 +28,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseConfig
         }
         debug {
             signingConfig signingConfigs.debugConfig

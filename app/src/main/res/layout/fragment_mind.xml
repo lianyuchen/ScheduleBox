@@ -7,7 +7,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/convenientBanner"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="230dp"
         app:canLoop="true" />
 
 </FrameLayout>
