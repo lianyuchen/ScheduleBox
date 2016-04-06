@@ -7,15 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.lyc.schedulebox.R;
+import com.lyc.schedulebox.adapter.ShowMindListAdapter;
+import com.lyc.schedulebox.logic.model.MindListModel;
+import com.lyc.schedulebox.presenter.IMindPresenter;
+import com.lyc.schedulebox.presenter.impl.MindPresenterImpl;
+import com.lyc.schedulebox.view.IMindFragView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,11 +32,16 @@ import butterknife.OnClick;
 /**
  * Created by lianyuchen on 15/12/30.
  */
-public class MindFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
+public class MindFragment extends BaseFragment implements ViewPager.OnPageChangeListener, View.OnLongClickListener, IMindFragView {
     @Bind(R.id.convenientBanner)
     ConvenientBanner convenientBanner;
+    @Bind(R.id.lv_mind)
+    ListView lvMind;
     private View mViews = null;
     private ArrayList<Integer> localImages = new ArrayList<>();
+    private List<MindListModel.ObjEntity.ListEntity> data = new ArrayList<>();
+    private IMindPresenter mindPresenter;
+    private ShowMindListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +59,12 @@ public class MindFragment extends BaseFragment implements ViewPager.OnPageChange
     }
 
     private void init() {
+        getUserInfo();
+        mindPresenter = new MindPresenterImpl(this);
+        mindPresenter.showMindList(userId);
+        adapter = new ShowMindListAdapter(getActivity(),data);
+        lvMind.setAdapter(adapter);
+        getActivity().findViewById(R.id.tv_title).setOnLongClickListener(this);
         loadTestDatas();
         //自定义你的Holder，实现更多复杂的界面，不一定是图片翻页，其他任何控件翻页亦可。
         convenientBanner.setPages(
@@ -119,12 +137,24 @@ public class MindFragment extends BaseFragment implements ViewPager.OnPageChange
 
     @Override
     public void onPageSelected(int position) {
-        Toast.makeText(getActivity(),"监听到翻到第"+position+"了",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "监听到翻到第" + position + "了", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        return false;
+    }
+
+    @Override
+    public void showMindList(List<MindListModel.ObjEntity.ListEntity> list) {
+        data.clear();
+        data.addAll(list);
+        adapter.notifyDataSetChanged();
     }
 
     class LocalImageHolderView implements Holder<Integer> {
@@ -158,6 +188,7 @@ public class MindFragment extends BaseFragment implements ViewPager.OnPageChange
         super.onResume();
         //开始自动翻页
         convenientBanner.startTurning(5000);
+        mindPresenter.showMindList(userId);
     }
 
     @Override

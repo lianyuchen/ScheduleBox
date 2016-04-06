@@ -16,7 +16,6 @@ import com.lyc.schedulebox.R;
 import com.lyc.schedulebox.presenter.ISchedulePresenter;
 import com.lyc.schedulebox.presenter.impl.SchedulePresenterImpl;
 import com.lyc.schedulebox.ui.activity.AddScheduleActivity;
-import com.lyc.schedulebox.utils.SharedPreferenceUtils;
 import com.lyc.schedulebox.utils.logutils.LogUtils;
 import com.lyc.schedulebox.view.IScheduleFragView;
 
@@ -41,8 +40,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
     private View mViews = null;
     private ISchedulePresenter mSchedulePresenter;
     private List<WeekViewEvent> events = new ArrayList<>();
-    private int userId = -1;
-    private String last7Day, behind7Day;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,16 +72,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
         setupDateTimeInterpreter(false);
     }
 
-    private void getUserInfo() {
-        userId = SharedPreferenceUtils.getValue(getActivity(), "login_info", "userId", -1);
-        Calendar start = Calendar.getInstance();
-        start.add(Calendar.DATE, -7);
-        Calendar end = Calendar.getInstance();
-        end.add(Calendar.DATE, +7);
-        last7Day = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(start.getTime());
-        behind7Day = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(end.getTime());
-        LogUtils.i(last7Day + "--" + behind7Day);
-    }
 
     @Override
     public void onDestroyView() {

@@ -17,4 +17,5 @@ public class AppConstants {
     public final static String URL_GET_SCHEDULE_LIST = WEB_HOST + "/SearchScheduleByTimeServlet";
     public final static String URL_GET_USER_INFO = WEB_HOST + "/UserLoginServlet";
     public final static String URL_ADD_SCHEDULE = WEB_HOST + "/SubmitScheduleServlet";
+    public final static String URL_GET_MIND_LIST = WEB_HOST + "/SearchMindListServlet";
 }
