@@ -3,7 +3,7 @@ package com.lyc.schedulebox.view;
 /**
  * Created by lianyuchen on 16/3/31.
  */
-public interface IAddScheduleView {
+public interface IAddScheduleView extends IBaseView{
 
     String getStartTime();
 

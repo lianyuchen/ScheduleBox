@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by lianyuchen on 16/3/8.
  */
-public interface IScheduleFragView {
+public interface IScheduleFragView extends IBaseView{
 
     void showScheduleInfoList(List<WeekViewEvent> events);
 }

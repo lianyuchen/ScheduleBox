@@ -47,12 +47,12 @@ public class SchedulePresenterImpl implements ISchedulePresenter, GetScheduleLis
 
     @Override
     public void getScheduleFailed(ErrorObj obj) {
-
+        mScheduleFragView.showLogicFailed(obj);
     }
 
     @Override
     public void getError(ErrorObj obj) {
-
+        mScheduleFragView.showNetWorkError(obj);
     }
 
     @Override
@@ -70,11 +70,11 @@ public class SchedulePresenterImpl implements ISchedulePresenter, GetScheduleLis
 
     @Override
     public void addFailed(ErrorObj obj) {
-
+        mAddScheduleView.showLogicFailed(obj);
     }
 
     @Override
     public void addError(ErrorObj obj) {
-
+        mAddScheduleView.showNetWorkError(obj);
     }
 }

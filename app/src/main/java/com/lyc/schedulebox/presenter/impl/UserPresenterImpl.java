@@ -46,12 +46,12 @@ public class UserPresenterImpl implements IUserLoginPresenter,GetUserInfoListene
 
     @Override
     public void getUserInfoError(ErrorObj obj) {
-        mLoginView.showNetError(obj);
+        mLoginView.showNetWorkError(obj);
     }
 
     @Override
     public void getUserInfoFailed(ErrorObj obj) {
-        mLoginView.showLoginFailedDialog();
+        mLoginView.showLogicFailed(obj);
     }
 
     @Override
@@ -67,6 +67,6 @@ public class UserPresenterImpl implements IUserLoginPresenter,GetUserInfoListene
 
     @Override
     public void clearUserInfoFailed() {
-
+        mLogoutView.showLogicFailed();
     }
 }

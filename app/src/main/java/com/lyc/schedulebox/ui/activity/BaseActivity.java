@@ -7,8 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cxyw.suyun.common.net.model.ErrorObj;
 import com.lyc.schedulebox.R;
+import com.lyc.schedulebox.view.IBaseView;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -16,7 +19,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 /**
  * Created by lianyuchen on 16/2/23.
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements IBaseView{
     private ImageButton mBack;
     private TextView mTitle;
     private TextView mRight;
@@ -95,5 +98,25 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
+    public void showNetWorkError(ErrorObj obj) {
+        Toast.makeText(this, obj.getErrorMsg(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showNetWorkError() {
+        Toast.makeText(this, "网络异常", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLogicFailed(ErrorObj obj) {
+        Toast.makeText(this, obj.getErrorMsg(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLogicFailed() {
+        Toast.makeText(this, "加载失败", Toast.LENGTH_SHORT).show();
     }
 }

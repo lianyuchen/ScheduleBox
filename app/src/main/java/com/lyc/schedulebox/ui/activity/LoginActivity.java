@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.cxyw.suyun.common.net.model.ErrorObj;
 import com.lyc.schedulebox.R;
 import com.lyc.schedulebox.presenter.IUserLoginPresenter;
 import com.lyc.schedulebox.presenter.impl.UserPresenterImpl;
@@ -62,16 +61,6 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     public String getUserPassword() {
         return etPassword.getText().toString().trim();
-    }
-
-    @Override
-    public void showNetError(ErrorObj obj) {
-
-    }
-
-    @Override
-    public void showLoginFailedDialog() {
-
     }
 
     @Override
