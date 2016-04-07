@@ -7,9 +7,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lyc.schedulebox.R;
 import com.lyc.schedulebox.adapter.CustomFragmentPagerAdapter;
+
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,6 +26,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private RadioGroup mRadioGroup;
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private int currentRadioButtonId;
+    private Date backTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +100,19 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mFragmentPagerAdapter.finishUpdate(mFrameLayout);
 
 
+    }
+
+    //	再按一次退出
+    @Override
+    public void onBackPressed() {
+
+        Date currentTime = new Date();
+        if(backTime == null || currentTime.getTime() - backTime.getTime() > 3000){
+            backTime = currentTime;
+            Toast.makeText(getApplicationContext(), "再次按下返回键退出", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        super.onBackPressed();
     }
 
 }

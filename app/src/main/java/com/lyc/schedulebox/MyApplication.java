@@ -38,7 +38,7 @@ public class MyApplication extends CommonApplication {
     }
 
     private void regToWX() {
-        api = WXAPIFactory.createWXAPI(this, AppConstants.APP_ID, true);
+        api = WXAPIFactory.createWXAPI(this, AppConstants.APP_ID, false);
 
         api.registerApp(AppConstants.APP_ID);
     }

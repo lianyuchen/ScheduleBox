@@ -7,17 +7,24 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.lyc.schedulebox.MyApplication;
 import com.lyc.schedulebox.R;
 import com.lyc.schedulebox.presenter.IMindPresenter;
+import com.lyc.schedulebox.presenter.ISharePresenter;
 import com.lyc.schedulebox.presenter.impl.MindPresenterImpl;
+import com.lyc.schedulebox.presenter.impl.SharePresenterImpl;
 import com.lyc.schedulebox.utils.SharedPreferenceUtils;
 import com.lyc.schedulebox.view.IRecordMindView;
+import com.lyc.schedulebox.view.IShareView;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXTextObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RecordMindActivity extends BaseActivity implements IRecordMindView{
+public class RecordMindActivity extends BaseActivity implements IRecordMindView, IShareView{
 
     @Bind(R.id.et_mind_content)
     EditText etMindContent;
@@ -35,6 +42,7 @@ public class RecordMindActivity extends BaseActivity implements IRecordMindView{
     Button btnPubMind;
 
     private IMindPresenter mindPresenter;
+    private ISharePresenter sharePresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +60,12 @@ public class RecordMindActivity extends BaseActivity implements IRecordMindView{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ib_share_weixin:
+                sharePresenter = new SharePresenterImpl(this);
+                sharePresenter.shareWXSession();
                 break;
             case R.id.ib_share_weixin_timeline:
+                sharePresenter = new SharePresenterImpl(this);
+                sharePresenter.shareWXTimeLine();
                 break;
             case R.id.ib_share_qq:
                 break;
@@ -82,5 +94,61 @@ public class RecordMindActivity extends BaseActivity implements IRecordMindView{
     @Override
     public int getUserId() {
         return SharedPreferenceUtils.getValue(this, "login_info", "userId", -1);
+    }
+
+    @Override
+    public void shareWXTimeLine() {
+        WXTextObject object = new WXTextObject();
+        object.text = getShareText();
+
+        WXMediaMessage msg = new WXMediaMessage();
+        msg.mediaObject = object;
+        msg.description = getShareText();
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("text");
+        req.message = msg;
+        req.scene = SendMessageToWX.Req.WXSceneTimeline;
+        MyApplication.api.sendReq(req);
+    }
+
+    @Override
+    public void shareWXSession() {
+        WXTextObject object = new WXTextObject();
+        object.text = getShareText();
+
+        WXMediaMessage msg = new WXMediaMessage();
+        msg.mediaObject = object;
+        msg.description = getShareText();
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("text");
+        req.message = msg;
+        req.scene = SendMessageToWX.Req.WXSceneSession;
+        MyApplication.api.sendReq(req);
+    }
+
+    @Override
+    public void shareQQ() {
+
+    }
+
+    @Override
+    public void shareQzone() {
+
+    }
+
+    @Override
+    public void shareWeibo() {
+
+    }
+
+    @Override
+    public String getShareText() {
+        return getMindContent();
+    }
+
+    private String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
 }
