@@ -27,7 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.AddScheduleActivity"></activity>
+        <activity android:name=".ui.activity.AddScheduleActivity" />
+        <activity android:name=".ui.activity.RecordMindActivity"></activity>
     </application>
 
 </manifest>

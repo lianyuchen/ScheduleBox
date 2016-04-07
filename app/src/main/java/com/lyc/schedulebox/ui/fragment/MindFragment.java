@@ -1,6 +1,7 @@
 package com.lyc.schedulebox.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.lyc.schedulebox.adapter.ShowMindListAdapter;
 import com.lyc.schedulebox.logic.model.MindListModel;
 import com.lyc.schedulebox.presenter.IMindPresenter;
 import com.lyc.schedulebox.presenter.impl.MindPresenterImpl;
+import com.lyc.schedulebox.ui.activity.RecordMindActivity;
 import com.lyc.schedulebox.view.IMindFragView;
 
 import java.lang.reflect.Field;
@@ -32,7 +34,7 @@ import butterknife.OnClick;
 /**
  * Created by lianyuchen on 15/12/30.
  */
-public class MindFragment extends BaseFragment implements ViewPager.OnPageChangeListener, View.OnLongClickListener, IMindFragView {
+public class MindFragment extends BaseFragment implements ViewPager.OnPageChangeListener, View.OnClickListener, IMindFragView {
     @Bind(R.id.convenientBanner)
     ConvenientBanner convenientBanner;
     @Bind(R.id.lv_mind)
@@ -64,7 +66,7 @@ public class MindFragment extends BaseFragment implements ViewPager.OnPageChange
         mindPresenter.showMindList(userId);
         adapter = new ShowMindListAdapter(getActivity(),data);
         lvMind.setAdapter(adapter);
-        getActivity().findViewById(R.id.tv_title).setOnLongClickListener(this);
+        getActivity().findViewById(R.id.tv_title).setOnClickListener(this);
         loadTestDatas();
         //自定义你的Holder，实现更多复杂的界面，不一定是图片翻页，其他任何控件翻页亦可。
         convenientBanner.setPages(
@@ -146,15 +148,17 @@ public class MindFragment extends BaseFragment implements ViewPager.OnPageChange
     }
 
     @Override
-    public boolean onLongClick(View v) {
-        return false;
-    }
-
-    @Override
     public void showMindList(List<MindListModel.ObjEntity.ListEntity> list) {
         data.clear();
         data.addAll(list);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getActivity(), RecordMindActivity.class);
+        intent.putExtra("userId",userId);
+        startActivity(intent);
     }
 
     class LocalImageHolderView implements Holder<Integer> {
