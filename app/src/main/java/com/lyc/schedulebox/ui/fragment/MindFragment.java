@@ -66,7 +66,6 @@ public class MindFragment extends BaseFragment implements ViewPager.OnPageChange
         mindPresenter.showMindList(userId);
         adapter = new ShowMindListAdapter(getActivity(),data);
         lvMind.setAdapter(adapter);
-        getActivity().findViewById(R.id.tv_title).setOnClickListener(this);
         loadTestDatas();
         //自定义你的Holder，实现更多复杂的界面，不一定是图片翻页，其他任何控件翻页亦可。
         convenientBanner.setPages(
@@ -190,6 +189,7 @@ public class MindFragment extends BaseFragment implements ViewPager.OnPageChange
     @Override
     public void onResume() {
         super.onResume();
+        getActivity().findViewById(R.id.tv_title).setOnClickListener(this);
         //开始自动翻页
         convenientBanner.startTurning(5000);
         mindPresenter.showMindList(userId);

@@ -6,6 +6,8 @@ import com.cxyw.suyun.common.net.model.ErrorObj;
 import com.lyc.schedulebox.common.AppConstants;
 import com.lyc.schedulebox.logic.IMindInteractor;
 import com.lyc.schedulebox.logic.listener.GetMindListListener;
+import com.lyc.schedulebox.logic.listener.UploadMindListener;
+import com.lyc.schedulebox.logic.model.BaseModel;
 import com.lyc.schedulebox.logic.model.MindListModel;
 import com.lyc.schedulebox.utils.NetworkHelper;
 
@@ -34,5 +36,28 @@ public class MindInteractorImpl implements IMindInteractor {
                 listener.getError(obj);
             }
         }, MindListModel.class);
+    }
+
+    @Override
+    public void uploadMind(String userId, String mindContent, final UploadMindListener listener) {
+        RequestParams params = new RequestParams();
+        params.setRequestString("userId", userId);
+        params.setRequestString("mindContent", mindContent);
+        NetworkHelper.getInstance().post(AppConstants.URL_PUB_MIND, params, new IRequestCallBack<BaseModel>() {
+            @Override
+            public void onSuccess(BaseModel result) {
+                listener.uploadMindSuccess();
+            }
+
+            @Override
+            public void onError(ErrorObj obj) {
+                listener.uploadMindError(obj);
+            }
+
+            @Override
+            public void onFailed(ErrorObj obj) {
+                listener.uploadMindFailed(obj);
+            }
+        }, BaseModel.class);
     }
 }

@@ -16,8 +16,11 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_share"
         android:layout_below="@+id/title"
-        android:gravity="start"
-        android:hint="请输入心情" />
+        android:gravity="left"
+        android:lineSpacingExtra="5dp"
+        android:hint="请输入心情"
+        android:paddingLeft="10dp"
+        android:paddingRight="5dp"/>
 
     <LinearLayout
         android:id="@+id/ll_share"

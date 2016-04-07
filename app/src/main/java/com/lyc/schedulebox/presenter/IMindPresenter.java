@@ -6,4 +6,6 @@ package com.lyc.schedulebox.presenter;
 public interface IMindPresenter {
 
     void showMindList(int userId);
+
+    void pubMind();
 }
