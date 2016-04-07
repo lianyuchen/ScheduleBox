@@ -6,6 +6,8 @@ import android.os.Handler;
 
 import com.lyc.schedulebox.R;
 import com.lyc.schedulebox.utils.SharedPreferenceUtils;
+import com.tencent.stat.StatConfig;
+import com.tencent.stat.StatService;
 
 public class WelcomeActivity extends BaseActivity {
 
@@ -13,6 +15,8 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatConfig.setDebugEnable(true);
+        StatService.trackCustomEvent(this, "onCreate", "");
         setContentView(R.layout.activity_welcome);
         init();
     }

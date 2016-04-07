@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <data android:scheme="tencent1105237173" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -15,6 +16,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <meta-data android:name="TA_APPKEY" android:value="Aqc1105237173" />
+        <meta-data android:name="InstallChannel" android:value="play" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask" />
@@ -29,6 +32,23 @@
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.AddScheduleActivity" />
         <activity android:name=".ui.activity.RecordMindActivity"></activity>
+
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:noHistory="true"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent你的AppId" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.tencent.connect.common.AssistActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
     </application>
+
 
 </manifest>

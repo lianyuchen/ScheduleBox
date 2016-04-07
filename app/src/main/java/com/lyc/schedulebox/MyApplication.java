@@ -6,6 +6,7 @@ import com.cxyw.suyun.common.utils.CommonApplication;
 import com.lyc.schedulebox.common.AppConstants;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.tauth.Tencent;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -20,6 +21,7 @@ public class MyApplication extends CommonApplication {
     public static MyApplication getInstance() {
         return app;
     }
+    public static Tencent mTencent;
 
     @Override
     public void onCreate() {
@@ -34,13 +36,16 @@ public class MyApplication extends CommonApplication {
         );
 
         regToWX();
+        // Tencent类是SDK的主要实现类，开发者可通过Tencent类访问腾讯开放的OpenAPI。
+        // 其中APP_ID是分配给第三方应用的appid，类型为String。
+        mTencent = Tencent.createInstance(AppConstants.QQ_APP_ID, getScheduleBoxApplicationContext());
         
     }
 
     private void regToWX() {
-        api = WXAPIFactory.createWXAPI(this, AppConstants.APP_ID, false);
+        api = WXAPIFactory.createWXAPI(this, AppConstants.WX_APP_ID, false);
 
-        api.registerApp(AppConstants.APP_ID);
+        api.registerApp(AppConstants.WX_APP_ID);
     }
 
     public static Context getScheduleBoxApplicationContext() {
