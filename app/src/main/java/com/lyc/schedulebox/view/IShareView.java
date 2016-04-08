@@ -16,4 +16,6 @@ public interface IShareView extends IBaseView{
     void shareWeibo();
 
     String getShareText();
+
+    void showToast(Object o);
 }

@@ -10,6 +10,7 @@ import com.lyc.schedulebox.presenter.IUserLoginPresenter;
 import com.lyc.schedulebox.presenter.impl.UserPresenterImpl;
 import com.lyc.schedulebox.utils.SharedPreferenceUtils;
 import com.lyc.schedulebox.view.ILoginView;
+import com.tencent.stat.StatService;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -68,5 +69,10 @@ public class LoginActivity extends BaseActivity implements ILoginView{
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
         this.finish();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
     }
 }

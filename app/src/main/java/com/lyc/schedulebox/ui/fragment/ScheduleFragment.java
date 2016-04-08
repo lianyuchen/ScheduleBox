@@ -18,6 +18,7 @@ import com.lyc.schedulebox.presenter.impl.SchedulePresenterImpl;
 import com.lyc.schedulebox.ui.activity.AddScheduleActivity;
 import com.lyc.schedulebox.utils.logutils.LogUtils;
 import com.lyc.schedulebox.view.IScheduleFragView;
+import com.tencent.stat.StatService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -173,6 +174,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
     public void onResume() {
         super.onResume();
         init();
+        StatService.onResume(getActivity());
     }
 
     @Override

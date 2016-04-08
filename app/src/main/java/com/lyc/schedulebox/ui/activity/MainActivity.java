@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.lyc.schedulebox.R;
 import com.lyc.schedulebox.adapter.CustomFragmentPagerAdapter;
+import com.tencent.stat.StatService;
 
 import java.util.Date;
 
@@ -36,6 +37,11 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         initView();
         initData();
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
     }
 
 

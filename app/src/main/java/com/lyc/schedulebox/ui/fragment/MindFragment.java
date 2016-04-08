@@ -21,6 +21,7 @@ import com.lyc.schedulebox.presenter.IMindPresenter;
 import com.lyc.schedulebox.presenter.impl.MindPresenterImpl;
 import com.lyc.schedulebox.ui.activity.RecordMindActivity;
 import com.lyc.schedulebox.view.IMindFragView;
+import com.tencent.stat.StatService;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -193,6 +194,7 @@ public class MindFragment extends BaseFragment implements ViewPager.OnPageChange
         //开始自动翻页
         convenientBanner.startTurning(5000);
         mindPresenter.showMindList(userId);
+        StatService.onResume(getActivity());
     }
 
     @Override

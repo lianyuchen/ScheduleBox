@@ -16,6 +16,7 @@ import com.lyc.schedulebox.ui.activity.LoginActivity;
 import com.lyc.schedulebox.utils.SharedPreferenceUtils;
 import com.lyc.schedulebox.utils.logutils.LogUtils;
 import com.lyc.schedulebox.view.ILogoutView;
+import com.tencent.stat.StatService;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -82,6 +83,7 @@ public class UserFragment extends BaseFragment implements ILogoutView{
         super.onResume();
 //        LogUtils.i("UserFragment","onResume()");
         init();
+        StatService.onResume(getActivity());
     }
 
     @Override

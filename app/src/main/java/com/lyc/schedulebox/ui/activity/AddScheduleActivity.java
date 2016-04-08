@@ -15,6 +15,7 @@ import com.lyc.schedulebox.presenter.IAddSchedulePresenter;
 import com.lyc.schedulebox.presenter.impl.SchedulePresenterImpl;
 import com.lyc.schedulebox.utils.SharedPreferenceUtils;
 import com.lyc.schedulebox.view.IAddScheduleView;
+import com.tencent.stat.StatService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,6 +61,12 @@ public class AddScheduleActivity extends BaseActivity implements IAddScheduleVie
         ButterKnife.bind(this);
 
         init();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
     }
 
     private void init() {

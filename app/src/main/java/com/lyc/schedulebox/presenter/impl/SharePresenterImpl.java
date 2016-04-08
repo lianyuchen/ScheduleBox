@@ -9,6 +9,7 @@ import com.lyc.schedulebox.view.IShareView;
 public class SharePresenterImpl implements ISharePresenter {
 
     private IShareView shareView;
+
     public SharePresenterImpl(IShareView shareView) {
         this.shareView = shareView;
     }
@@ -25,17 +26,17 @@ public class SharePresenterImpl implements ISharePresenter {
 
     @Override
     public void shareQQ() {
-
+        shareView.shareQQ();
     }
 
     @Override
     public void shareQzone() {
-
+        shareView.shareQzone();
     }
 
     @Override
     public void shareWeibo() {
-
+        shareView.shareWeibo();
     }
 
 }
