@@ -14,4 +14,6 @@ public interface ISharePresenter {
     void shareQzone();
 
     void shareWeibo();
+
+    void hasAuthInfo();
 }

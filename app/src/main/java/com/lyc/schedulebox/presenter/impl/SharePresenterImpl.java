@@ -39,4 +39,9 @@ public class SharePresenterImpl implements ISharePresenter {
         shareView.shareWeibo();
     }
 
+    @Override
+    public void hasAuthInfo() {
+        shareView.hasWeiboAuthInfo();
+    }
+
 }

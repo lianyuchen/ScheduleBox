@@ -13,6 +13,8 @@ public interface IShareView extends IBaseView{
 
     void shareQzone();
 
+    void hasWeiboAuthInfo();
+
     void shareWeibo();
 
     String getShareText();

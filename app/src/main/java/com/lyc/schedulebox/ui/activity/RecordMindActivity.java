@@ -14,10 +14,19 @@ import com.lyc.schedulebox.presenter.IMindPresenter;
 import com.lyc.schedulebox.presenter.ISharePresenter;
 import com.lyc.schedulebox.presenter.impl.MindPresenterImpl;
 import com.lyc.schedulebox.presenter.impl.SharePresenterImpl;
+import com.lyc.schedulebox.ui.listener.AuthListener;
 import com.lyc.schedulebox.ui.listener.ShareQQUiListener;
+import com.lyc.schedulebox.utils.AccessTokenKeeper;
 import com.lyc.schedulebox.utils.SharedPreferenceUtils;
 import com.lyc.schedulebox.view.IRecordMindView;
 import com.lyc.schedulebox.view.IShareView;
+import com.sina.weibo.sdk.api.TextObject;
+import com.sina.weibo.sdk.api.WeiboMessage;
+import com.sina.weibo.sdk.api.share.BaseResponse;
+import com.sina.weibo.sdk.api.share.IWeiboHandler;
+import com.sina.weibo.sdk.api.share.SendMessageToWeiboRequest;
+import com.sina.weibo.sdk.auth.sso.SsoHandler;
+import com.sina.weibo.sdk.constant.WBConstants;
 import com.tencent.connect.share.QQShare;
 import com.tencent.connect.share.QzonePublish;
 import com.tencent.connect.share.QzoneShare;
@@ -33,7 +42,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RecordMindActivity extends BaseActivity implements IRecordMindView, IShareView {
+
+public class RecordMindActivity extends BaseActivity implements IRecordMindView, IShareView, IWeiboHandler.Response {
 
     @Bind(R.id.et_mind_content)
     EditText etMindContent;
@@ -53,6 +63,8 @@ public class RecordMindActivity extends BaseActivity implements IRecordMindView,
     private IMindPresenter mindPresenter;
     private ISharePresenter sharePresenter;
     private IUiListener shareQQUiListener;
+    /** 注意：SsoHandler 仅当 SDK 支持 SSO 时有效 */
+    private SsoHandler mSsoHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +76,7 @@ public class RecordMindActivity extends BaseActivity implements IRecordMindView,
 
     private void init() {
         initTitleBar();
-        setTitleBarText("发表心情");
+        setTitleBarText("记录心情");
         shareQQUiListener = new ShareQQUiListener(this);
     }
 
@@ -171,7 +183,31 @@ public class RecordMindActivity extends BaseActivity implements IRecordMindView,
     }
 
     @Override
+    public void hasWeiboAuthInfo() {
+        if (null == AccessTokenKeeper.readAccessToken(this)) {
+            mSsoHandler = new SsoHandler(RecordMindActivity.this, MyApplication.mWeiboAuth);
+            mSsoHandler.authorize(new AuthListener(this));
+        }else {
+            sharePresenter.shareWeibo();
+        }
+    }
+
+    @Override
     public void shareWeibo() {
+        // 1. 初始化微博的分享消息
+        // 用户可以分享文本、图片、网页、音乐、视频中的一种
+        WeiboMessage weiboMessage = new WeiboMessage();
+        TextObject textObject = new TextObject();
+        textObject.text = getShareText();
+        weiboMessage.mediaObject = textObject;
+        // 2. 初始化从第三方到微博的消息请求
+        SendMessageToWeiboRequest request = new SendMessageToWeiboRequest();
+        // 用transaction唯一标识一个请求
+        request.transaction = String.valueOf(System.currentTimeMillis());
+        request.message = weiboMessage;
+
+        // 3. 发送请求消息到微博，唤起微博分享界面
+        mWeiboShareAPI.sendRequest(request);
 
     }
 
@@ -196,5 +232,37 @@ public class RecordMindActivity extends BaseActivity implements IRecordMindView,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Tencent.onActivityResultData(requestCode,resultCode,data, shareQQUiListener);
+        // SSO 授权回调
+        // 重要：发起 SSO 登陆的 Activity 必须重写 onActivityResult
+        if (mSsoHandler != null) {
+            mSsoHandler.authorizeCallBack(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        // 从当前应用唤起微博并进行分享后，返回到当前应用时，需要在此处调用该函数
+        // 来接收微博客户端返回的数据；执行成功，返回 true，并调用
+        // {@link IWeiboHandler.Response#onResponse}；失败返回 false，不调用上述回调
+        mWeiboShareAPI.handleWeiboResponse(intent, this);
+    }
+
+    @Override
+    public void onResponse(BaseResponse baseResponse) {
+        switch (baseResponse.errCode) {
+            case WBConstants.ErrorCode.ERR_OK:
+                Toast.makeText(this, R.string.weibosdk_demo_toast_share_success, Toast.LENGTH_LONG).show();
+                break;
+            case WBConstants.ErrorCode.ERR_CANCEL:
+                Toast.makeText(this, R.string.weibosdk_demo_toast_share_canceled, Toast.LENGTH_LONG).show();
+                break;
+            case WBConstants.ErrorCode.ERR_FAIL:
+                Toast.makeText(this,
+                        getString(R.string.weibosdk_demo_toast_share_failed) + "Error Message: " + baseResponse.errMsg,
+                        Toast.LENGTH_LONG).show();
+                break;
+        }
     }
 }

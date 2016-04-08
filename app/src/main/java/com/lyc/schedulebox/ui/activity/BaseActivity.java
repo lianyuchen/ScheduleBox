@@ -11,7 +11,10 @@ import android.widget.Toast;
 
 import com.cxyw.suyun.common.net.model.ErrorObj;
 import com.lyc.schedulebox.R;
+import com.lyc.schedulebox.common.AppConstants;
 import com.lyc.schedulebox.view.IBaseView;
+import com.sina.weibo.sdk.api.share.IWeiboShareAPI;
+import com.sina.weibo.sdk.api.share.WeiboShareSDK;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -24,10 +27,18 @@ public class BaseActivity extends AppCompatActivity implements IBaseView{
     private TextView mTitle;
     private TextView mRight;
     protected Resources resources;
+
+    /** 微博分享的接口实例 */
+    protected static IWeiboShareAPI mWeiboShareAPI;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resources = this.getResources();
+        // 创建微博 SDK 接口实例
+        mWeiboShareAPI = WeiboShareSDK.createWeiboAPI(this, AppConstants.WEIBO_APP_KEY);
+
+        // 注册到新浪微博
+        mWeiboShareAPI.registerApp();
     }
     protected void initTitleBar() {
         mTitle = (TextView) findViewById(R.id.tv_title);
