@@ -3,13 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    tools:context="com.lyc.schedulebox.ui.activity.LoginActivity">
-
+    android:background="@color/normal_background"
+    tools:context="com.lyc.schedulebox.ui.activity.RegisterActivity">
     <include
         android:id="@+id/title"
         layout="@layout/title_bar_view" />
-
     <LinearLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
@@ -97,20 +95,8 @@
                 android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="没有账号？"
-        android:padding="10dp"
-        android:gravity="center"
-        android:layout_below="@+id/layout2"
-        android:layout_alignRight="@+id/layout2"
-        android:textSize="18sp"
-        android:clickable="true"/>
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -120,7 +106,7 @@
         android:background="@drawable/btn_border_bg_blue_selector"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:text="登陆"
+        android:text="注册"
         android:textColor="@android:color/white"
         android:textSize="22sp" />
 </RelativeLayout>
