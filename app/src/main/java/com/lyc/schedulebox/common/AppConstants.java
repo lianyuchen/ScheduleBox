@@ -34,4 +34,5 @@ public class AppConstants {
     public final static String URL_ADD_SCHEDULE = WEB_HOST + "/SubmitScheduleServlet";
     public final static String URL_GET_MIND_LIST = WEB_HOST + "/SearchMindListServlet";
     public final static String URL_PUB_MIND = WEB_HOST + "/SubmitMindServlet";
+    public final static String URL_USER_REGISTER = WEB_HOST + "/UserRegisterServlet";
 }
