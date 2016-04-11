@@ -7,6 +7,7 @@ import com.lyc.schedulebox.logic.IScheduleInteractor;
 import com.lyc.schedulebox.logic.impl.ScheduleInteractorImpl;
 import com.lyc.schedulebox.logic.listener.AddScheduleListener;
 import com.lyc.schedulebox.logic.listener.GetScheduleListener;
+import com.lyc.schedulebox.logic.listener.ModifyStatusListener;
 import com.lyc.schedulebox.presenter.IAddSchedulePresenter;
 import com.lyc.schedulebox.presenter.ISchedulePresenter;
 import com.lyc.schedulebox.utils.logutils.LogUtils;
@@ -15,10 +16,11 @@ import com.lyc.schedulebox.view.IScheduleFragView;
 
 import java.util.List;
 
+
 /**
  * Created by lianyuchen on 16/3/8.
  */
-public class SchedulePresenterImpl implements ISchedulePresenter, GetScheduleListener, IAddSchedulePresenter, AddScheduleListener {
+public class SchedulePresenterImpl implements ISchedulePresenter, GetScheduleListener, IAddSchedulePresenter, AddScheduleListener, ModifyStatusListener {
     private IScheduleInteractor mScheduleInteractor;
     private IScheduleFragView mScheduleFragView;
     private IAddScheduleView mAddScheduleView;
@@ -37,6 +39,12 @@ public class SchedulePresenterImpl implements ISchedulePresenter, GetScheduleLis
     @Override
     public void showSchedule(int userId, String start, String end) {
         mScheduleInteractor.getSchedule(userId + "", start, end, this);
+    }
+
+    @Override
+    public void updateScheduleStatus(int scheduleId) {
+        mScheduleInteractor.updateScheduleStatus(mScheduleFragView.getUserId() + "", scheduleId + "", "true", this);
+
     }
 
     @Override
@@ -76,5 +84,20 @@ public class SchedulePresenterImpl implements ISchedulePresenter, GetScheduleLis
     @Override
     public void addError(ErrorObj obj) {
         mAddScheduleView.showNetWorkError(obj);
+    }
+
+    @Override
+    public void modifyStatusSuccess() {
+        mScheduleFragView.refreshSchedule();
+    }
+
+    @Override
+    public void modifyStatusFailed(ErrorObj obj) {
+        mScheduleFragView.showLogicFailed(obj);
+    }
+
+    @Override
+    public void modifyStatusError(ErrorObj obj) {
+        mScheduleFragView.showNetWorkError(obj);
     }
 }

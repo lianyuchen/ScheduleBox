@@ -10,4 +10,10 @@ import java.util.List;
 public interface IScheduleFragView extends IBaseView{
 
     void showScheduleInfoList(List<WeekViewEvent> events);
+
+    int getUserId();
+
+    void refreshSchedule();
+
+
 }

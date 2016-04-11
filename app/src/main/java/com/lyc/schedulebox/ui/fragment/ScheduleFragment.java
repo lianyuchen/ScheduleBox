@@ -1,8 +1,10 @@
 package com.lyc.schedulebox.ui.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +96,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
         }
         return matchedEvents;
     }
+
     private boolean eventMatches(WeekViewEvent event, int year, int month) {
         return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == month - 1) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month - 1);
     }
@@ -106,9 +109,23 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
 
 
     @Override
-    public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
+    public void onEventLongPress(final WeekViewEvent event, RectF eventRect) {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("完成日程")
+                .setMessage("该操作不可挽回，确认是否已完成？")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-        Toast.makeText(getActivity(), event.getName(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mSchedulePresenter.updateScheduleStatus((int) event.getId());
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -123,7 +140,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
         String startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(time.getTime());
         LogUtils.i(startTime);
         Intent intent = new Intent(getActivity(), AddScheduleActivity.class);
-        intent.putExtra("startTime",startTime);
+        intent.putExtra("startTime", startTime);
         startActivityForResult(intent, 1);
 //        Toast.makeText(getActivity(), String.format("" + time.get(Calendar.HOUR_OF_DAY)) + ":" +
 //                String.format("" + time.get(Calendar.MINUTE)), Toast.LENGTH_SHORT).show();
@@ -134,6 +151,17 @@ public class ScheduleFragment extends BaseFragment implements IScheduleFragView,
         this.events.clear();
         this.events.addAll(events);
         weekView.notifyDatasetChanged();
+    }
+
+    @Override
+    public int getUserId() {
+        return userId;
+    }
+
+    @Override
+    public void refreshSchedule() {
+        Toast.makeText(getActivity(),"修改成功",Toast.LENGTH_SHORT).show();
+        mSchedulePresenter.showSchedule(userId, last7Day, behind7Day);
     }
 
     /**

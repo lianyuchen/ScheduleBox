@@ -9,6 +9,7 @@ import com.lyc.schedulebox.logic.IAddScheduleInteractor;
 import com.lyc.schedulebox.logic.IScheduleInteractor;
 import com.lyc.schedulebox.logic.listener.AddScheduleListener;
 import com.lyc.schedulebox.logic.listener.GetScheduleListener;
+import com.lyc.schedulebox.logic.listener.ModifyStatusListener;
 import com.lyc.schedulebox.logic.model.BaseModel;
 import com.lyc.schedulebox.logic.model.ScheduleListBean;
 import com.lyc.schedulebox.utils.ModelUtils;
@@ -61,6 +62,30 @@ public class ScheduleInteractorImpl implements IScheduleInteractor, IAddSchedule
     }
 
     @Override
+    public void updateScheduleStatus(String userId, String scheduleId, String status, final ModifyStatusListener listener) {
+        RequestParams params = new RequestParams();
+        params.setRequestString("userId", userId);
+        params.setRequestString("scheduleId", scheduleId);
+        params.setRequestString("scheduleStatus", status);
+        NetworkHelper.getInstance().post(AppConstants.URL_MODIFY_SCHEDULE_STATUS, params, new IRequestCallBack<BaseModel>() {
+            @Override
+            public void onSuccess(BaseModel result) {
+                listener.modifyStatusSuccess();
+            }
+
+            @Override
+            public void onError(ErrorObj obj) {
+                listener.modifyStatusError(obj);
+            }
+
+            @Override
+            public void onFailed(ErrorObj obj) {
+                listener.modifyStatusFailed(obj);
+            }
+        }, BaseModel.class);
+    }
+
+    @Override
     public void addSchedule(String userId, String start, String end, String scheduleType, String content, String color, final AddScheduleListener listener) {
         RequestParams params = new RequestParams();
         params.setRequestString("scheduleType", scheduleType);
@@ -68,7 +93,7 @@ public class ScheduleInteractorImpl implements IScheduleInteractor, IAddSchedule
         params.setRequestString("scheduleStartTime", start);
         params.setRequestString("scheduleEndTime", end);
         params.setRequestString("userId", userId);
-        params.setRequestString("scheduleColor",color);
+        params.setRequestString("scheduleColor", color);
         NetworkHelper.getInstance().post(AppConstants.URL_ADD_SCHEDULE, params, new IRequestCallBack<BaseModel>() {
             @Override
             public void onSuccess(BaseModel result) {
