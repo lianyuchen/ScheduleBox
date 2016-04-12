@@ -1,12 +1,14 @@
 package com.lyc.schedulebox.ui.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,8 +110,22 @@ public class UserFragment extends BaseFragment implements IUserFragView {
 
     @OnClick(R.id.btn_logout)
     public void logout() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("退出登陆")
+                .setMessage("确定退出登陆吗？")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-        mUserLogoutPresenter.doLogout();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mUserLogoutPresenter.doLogout();
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -266,7 +282,7 @@ public class UserFragment extends BaseFragment implements IUserFragView {
 
     @Override
     public String getUserUUID() {
-        return SharedPreferenceUtils.getValue(getActivity(),"login_info","uuid","");
+        return SharedPreferenceUtils.getValue(getActivity(), "login_info", "uuid", "");
     }
 
     @Override
@@ -276,6 +292,6 @@ public class UserFragment extends BaseFragment implements IUserFragView {
 
     @Override
     public void showUploadPhotoSuccess() {
-        Toast.makeText(getActivity(),"上传成功",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "上传成功", Toast.LENGTH_SHORT).show();
     }
 }
