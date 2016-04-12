@@ -16,7 +16,9 @@ import com.cxyw.suyun.common.net.model.HttpMethod;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * Created by liub on 16/2/24.
@@ -156,6 +158,87 @@ public class NetworkHelper {
                 callBack.onFailed(obj);
             }
         }, null);
+        return null;
+    }
+    public <T> T request(String url, String filePathName, File file, RequestParams params, final IRequestCallBack<T> callBack, final Class<T> model) {
+        final RequestParams requestParams = setCommonParams(params);;
+        NetworkProxy.getInstance().requestData(url, filePathName, file, requestParams, new IResponseCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject resultObj = new JSONObject(result);
+                    int code = JSONUtils.getInt(resultObj, "code", -1);
+                    String codeMsg = JSONUtils.getString(resultObj, "codeMsg", "");
+                    switch (code) {
+                        //响应成功状态为：200
+                        case 200:
+                            T parseResult = parseBean(result, model);
+                            boolean isCallBack = true;
+
+                            if (isCallBack) {
+                                callBack.onSuccess(parseResult);
+                            }
+                            break;
+                        default:
+                            callBack.onFailed(new ErrorObj(code, codeMsg));
+                            break;
+                    }
+                } catch (JSONException e) {
+                    callBack.onError(new ErrorObj(-1, e.getMessage()));
+                }
+            }
+
+            @Override
+            public void onError(ErrorObj obj) {
+                callBack.onError(obj);
+            }
+
+            @Override
+            public void onFailed(ErrorObj obj) {
+                callBack.onFailed(obj);
+            }
+        });
+        return null;
+    }
+
+    public <T> T request(String url, String filePathName, List<File> files, RequestParams params, final IRequestCallBack<T> callBack, final Class<T> model) {
+        final RequestParams requestParams = setCommonParams(params);
+        NetworkProxy.getInstance().requestData(url, filePathName, files, requestParams, new IResponseCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject resultObj = new JSONObject(result);
+                    int code = JSONUtils.getInt(resultObj, "code", -1);
+                    String codeMsg = JSONUtils.getString(resultObj, "codeMsg", "");
+                    switch (code) {
+                        //响应成功状态为：200
+                        case 200:
+                            T parseResult = parseBean(result, model);
+                            boolean isCallBack = true;
+
+                            if (isCallBack) {
+                                callBack.onSuccess(parseResult);
+                            }
+                            break;
+                        default:
+                            callBack.onFailed(new ErrorObj(code, codeMsg));
+                            break;
+                    }
+                } catch (JSONException e) {
+                    callBack.onError(new ErrorObj(-1, e.getMessage()));
+                }
+            }
+
+            @Override
+            public void onError(ErrorObj obj) {
+                callBack.onError(obj);
+            }
+
+            @Override
+            public void onFailed(ErrorObj obj) {
+                callBack.onFailed(obj);
+            }
+        });
         return null;
     }
 

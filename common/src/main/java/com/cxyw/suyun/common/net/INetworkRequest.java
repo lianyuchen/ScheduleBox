@@ -4,6 +4,8 @@ package com.cxyw.suyun.common.net;
 import com.cxyw.suyun.common.net.callBack.IResponseCallBack;
 import com.cxyw.suyun.common.net.model.HttpMethod;
 
+import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +23,10 @@ public interface INetworkRequest {
      * @param otherParams
      */
     void requestData(String url, HttpMethod method, RequestParams params, IResponseCallBack callBack,Map<String,Object> otherParams);
+
+    void requestData(String url, String filePathName, File file, RequestParams params, IResponseCallBack callBack);
+
+    void requestData(String url, String filePathName, List<File> files, RequestParams params, IResponseCallBack callBack);
 
     /**
      * 移除请求
