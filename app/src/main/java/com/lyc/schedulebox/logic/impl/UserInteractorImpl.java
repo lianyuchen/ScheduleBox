@@ -6,22 +6,27 @@ import com.cxyw.suyun.common.net.RequestParams;
 import com.cxyw.suyun.common.net.callBack.IRequestCallBack;
 import com.cxyw.suyun.common.net.model.ErrorObj;
 import com.lyc.schedulebox.common.AppConstants;
+import com.lyc.schedulebox.logic.IUploadPhotoInteractor;
 import com.lyc.schedulebox.logic.IUserLoginInteractor;
 import com.lyc.schedulebox.logic.IUserLogoutInteractor;
 import com.lyc.schedulebox.logic.IUserRegisterInteractor;
 import com.lyc.schedulebox.logic.listener.ClearUserInfoListener;
 import com.lyc.schedulebox.logic.listener.GetUserInfoListener;
 import com.lyc.schedulebox.logic.listener.RegisterUserListener;
+import com.lyc.schedulebox.logic.listener.UploadPhotoListener;
 import com.lyc.schedulebox.logic.model.BaseModel;
+import com.lyc.schedulebox.logic.model.FileModel;
 import com.lyc.schedulebox.logic.model.UserInfoModel;
 import com.lyc.schedulebox.utils.NetworkHelper;
 import com.lyc.schedulebox.utils.SharedPreferenceUtils;
 import com.lyc.schedulebox.utils.logutils.LogUtils;
 
+import java.io.File;
+
 /**
  * Created by lianyuchen on 16/3/25.
  */
-public class UserInteractorImpl implements IUserRegisterInteractor, IUserLoginInteractor, IUserLogoutInteractor {
+public class UserInteractorImpl implements IUploadPhotoInteractor, IUserRegisterInteractor, IUserLoginInteractor, IUserLogoutInteractor {
     private Context context;
 
     public UserInteractorImpl() {
@@ -93,5 +98,30 @@ public class UserInteractorImpl implements IUserRegisterInteractor, IUserLoginIn
                 listener.registerFailed(obj);
             }
         }, BaseModel.class);
+    }
+
+    @Override
+    public void uploadUserPhoto(String userUUID, String uri, final UploadPhotoListener listener) {
+        RequestParams params = new RequestParams();
+        params.setRequestString("userUUID",userUUID);
+        NetworkHelper.getInstance().request(AppConstants.URL_MODIFY_USER_PHOTO, "123.jpeg", new File(uri), params, new IRequestCallBack<FileModel>() {
+            @Override
+            public void onSuccess(FileModel result) {
+                LogUtils.i(result);
+                listener.uploadPhotoSuccess();
+            }
+
+            @Override
+            public void onError(ErrorObj obj) {
+                LogUtils.i(obj);
+                listener.uploadPhotoError(obj);
+            }
+
+            @Override
+            public void onFailed(ErrorObj obj) {
+                LogUtils.i(obj);
+                listener.uploadPhotoFailed(obj);
+            }
+        }, FileModel.class);
     }
 }

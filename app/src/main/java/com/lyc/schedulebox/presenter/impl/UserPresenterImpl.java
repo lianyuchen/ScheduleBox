@@ -3,6 +3,7 @@ package com.lyc.schedulebox.presenter.impl;
 import android.content.Context;
 
 import com.cxyw.suyun.common.net.model.ErrorObj;
+import com.lyc.schedulebox.logic.IUploadPhotoInteractor;
 import com.lyc.schedulebox.logic.IUserLoginInteractor;
 import com.lyc.schedulebox.logic.IUserLogoutInteractor;
 import com.lyc.schedulebox.logic.IUserRegisterInteractor;
@@ -10,35 +11,40 @@ import com.lyc.schedulebox.logic.impl.UserInteractorImpl;
 import com.lyc.schedulebox.logic.listener.ClearUserInfoListener;
 import com.lyc.schedulebox.logic.listener.GetUserInfoListener;
 import com.lyc.schedulebox.logic.listener.RegisterUserListener;
+import com.lyc.schedulebox.logic.listener.UploadPhotoListener;
 import com.lyc.schedulebox.logic.model.UserInfoModel;
+import com.lyc.schedulebox.presenter.IUploadPhotoPresenter;
 import com.lyc.schedulebox.presenter.IUserLoginPresenter;
 import com.lyc.schedulebox.presenter.IUserLogoutPresenter;
 import com.lyc.schedulebox.presenter.IUserRegisterPresenter;
 import com.lyc.schedulebox.view.ILoginView;
-import com.lyc.schedulebox.view.ILogoutView;
 import com.lyc.schedulebox.view.IRegisterView;
+import com.lyc.schedulebox.view.IUserFragView;
+
 
 /**
  * Created by lianyuchen on 16/3/25.
  */
-public class UserPresenterImpl implements IUserRegisterPresenter, RegisterUserListener, IUserLoginPresenter,GetUserInfoListener, IUserLogoutPresenter, ClearUserInfoListener {
+public class UserPresenterImpl implements IUploadPhotoPresenter, IUserRegisterPresenter, RegisterUserListener, IUserLoginPresenter, GetUserInfoListener, IUserLogoutPresenter, ClearUserInfoListener, UploadPhotoListener {
     private ILoginView mLoginView;
-    private ILogoutView mLogoutView;
     private IRegisterView mRegisterView;
+    private IUserFragView mUserFragView;
+
     private IUserLoginInteractor mUserLoginInteractor;
     private IUserLogoutInteractor mUserLogoutInteractor;
     private IUserRegisterInteractor mUserRegisterInteractor;
+    private IUploadPhotoInteractor mUploadPhotoInteractor;
 
     public UserPresenterImpl(ILoginView mLoginView) {
         this.mLoginView = mLoginView;
     }
 
-    public UserPresenterImpl(ILogoutView mLogoutView) {
-        this.mLogoutView = mLogoutView;
-    }
-
     public UserPresenterImpl(IRegisterView mRegisterView) {
         this.mRegisterView = mRegisterView;
+    }
+
+    public UserPresenterImpl(IUserFragView mUserFragView) {
+        this.mUserFragView = mUserFragView;
     }
 
     @Override
@@ -66,18 +72,18 @@ public class UserPresenterImpl implements IUserRegisterPresenter, RegisterUserLi
 
     @Override
     public void doLogout() {
-        mUserLogoutInteractor = new UserInteractorImpl(mLogoutView.getActivityContext());
+        mUserLogoutInteractor = new UserInteractorImpl(mUserFragView.getActivityContext());
         mUserLogoutInteractor.clearUserInfo(this);
     }
 
     @Override
     public void clearUserInfoSuccess() {
-        mLogoutView.jump2Login();
+        mUserFragView.jump2Login();
     }
 
     @Override
     public void clearUserInfoFailed() {
-        mLogoutView.showLogicFailed();
+        mUserFragView.showLogicFailed();
     }
 
     @Override
@@ -85,7 +91,7 @@ public class UserPresenterImpl implements IUserRegisterPresenter, RegisterUserLi
         String username = mRegisterView.getUserName();
         String password = mRegisterView.getUserPwd();
         mUserRegisterInteractor = new UserInteractorImpl();
-        mUserRegisterInteractor.doUserRegister(username,password,this);
+        mUserRegisterInteractor.doUserRegister(username, password, this);
     }
 
     @Override
@@ -101,5 +107,27 @@ public class UserPresenterImpl implements IUserRegisterPresenter, RegisterUserLi
     @Override
     public void registerError(ErrorObj obj) {
         mRegisterView.showNetWorkError(obj);
+    }
+
+    @Override
+    public void uploadUserPhoto() {
+        mUploadPhotoInteractor = new UserInteractorImpl();
+        mUploadPhotoInteractor.uploadUserPhoto(mUserFragView.getUserUUID(), mUserFragView.getPhotoUri(), this);
+
+    }
+
+    @Override
+    public void uploadPhotoSuccess() {
+        mUserFragView.showUploadPhotoSuccess();
+    }
+
+    @Override
+    public void uploadPhotoFailed(ErrorObj obj) {
+        mUserFragView.showLogicFailed(obj);
+    }
+
+    @Override
+    public void uploadPhotoError(ErrorObj obj) {
+        mUserFragView.showNetWorkError(obj);
     }
 }

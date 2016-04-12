@@ -24,9 +24,9 @@ public class AppConstants {
     public static final String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";
 
     public static final String SCOPE = "";
-    //genymotion模拟器访问本地tomcat的地址：10.0.3.2：8080
+    //genymotion模拟器访问本地tomcat的地址：10.0.3.2:8080
     /**
-     * 阿里云服务器地址：139.126.46.64
+     * 阿里云服务器地址：139.129.46.64
      */
     public final static String WEB_HOST = "http://139.129.46.64:8080/ScheduleBoxServer_war";
     public final static String URL_GET_SCHEDULE_LIST = WEB_HOST + "/SearchScheduleByTimeServlet";
@@ -36,4 +36,6 @@ public class AppConstants {
     public final static String URL_PUB_MIND = WEB_HOST + "/SubmitMindServlet";
     public final static String URL_USER_REGISTER = WEB_HOST + "/UserRegisterServlet";
     public final static String URL_MODIFY_SCHEDULE_STATUS = WEB_HOST + "/ModifyScheduleStatusServlet";
+    public final static String URL_MODIFY_USER_PHOTO = WEB_HOST + "/UserUploadPhotoServlet";
+
 }
