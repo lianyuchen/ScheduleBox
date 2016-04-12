@@ -16,4 +16,6 @@
     <color name="normal_background">#f0f4fa</color>
     <color name="btn_border_grey_color">#c2c7cc</color>
     <color name="btn_grey_pressed_color">#eff1f4</color>
+
+    <color name="jz_col_location_info">#848d99</color>
 </resources>

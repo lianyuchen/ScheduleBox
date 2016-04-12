@@ -17,12 +17,40 @@
             android:layout_marginTop="20dp"
             android:paddingRight="10dp">
 
+            <LinearLayout
+                android:id="@+id/layout_take_picture_hint"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:clickable="true"
+                android:background="@drawable/camera_background"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/default_camera" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:text="@string/capture_picture"
+                    android:textColor="@color/jz_col_location_info"
+                    android:textSize="14sp" />
+            </LinearLayout>
             <ImageView
                 android:id="@+id/iv_user_icon"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:padding="10dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
                 android:clickable="true"
+                android:visibility="gone"
                 android:scaleType="fitXY"
                 android:src="@mipmap/ic_launcher" />
 
@@ -31,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
+                android:background="@drawable/logout_button_selector"
                 android:orientation="vertical">
 
                 <TextView

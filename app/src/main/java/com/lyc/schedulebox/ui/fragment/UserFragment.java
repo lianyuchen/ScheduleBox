@@ -60,6 +60,8 @@ public class UserFragment extends BaseFragment implements IUserFragView {
     LinearLayout llMyMind;
     @Bind(R.id.ll_analysis)
     LinearLayout llAnalysis;
+    @Bind(R.id.layout_take_picture_hint)
+    LinearLayout layoutTakePictureHint;
     private View mViews = null;
     private IUserLogoutPresenter mUserLogoutPresenter;
     private IUploadPhotoPresenter mUploadPhotoPresenter;
@@ -148,7 +150,7 @@ public class UserFragment extends BaseFragment implements IUserFragView {
         return this.getActivity();
     }
 
-    @OnClick({R.id.iv_user_icon, R.id.ll_user_info, R.id.ll_my_friend, R.id.ll_my_share, R.id.ll_my_mind, R.id.ll_analysis})
+    @OnClick({R.id.iv_user_icon, R.id.layout_take_picture_hint, R.id.ll_user_info, R.id.ll_my_friend, R.id.ll_my_share, R.id.ll_my_mind, R.id.ll_analysis})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_user_icon:
@@ -162,6 +164,15 @@ public class UserFragment extends BaseFragment implements IUserFragView {
                 cameraintent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(tempFile));
                 startActivityForResult(cameraintent,
+                        CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                break;
+            case R.id.layout_take_picture_hint:
+                Intent intent = new Intent(
+                        MediaStore.ACTION_IMAGE_CAPTURE);
+                // 指定调用相机拍照后照片的储存路径
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(tempFile));
+                startActivityForResult(intent,
                         CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
                 break;
             case R.id.ll_user_info:
@@ -217,6 +228,8 @@ public class UserFragment extends BaseFragment implements IUserFragView {
                         photoUri = UtilsImageProcess.getPath(thumbnail);
                         mUploadPhotoPresenter = new UserPresenterImpl(this);
                         mUploadPhotoPresenter.uploadUserPhoto();
+                        layoutTakePictureHint.setVisibility(View.GONE);
+                        ivUserIcon.setVisibility(View.VISIBLE);
                         ivUserIcon.setImageBitmap(thumbnail);
                         tempFile.delete();//设置成功后清除之前的照片文件
                     }
