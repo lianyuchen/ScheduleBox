@@ -6,10 +6,13 @@ import com.cxyw.suyun.common.net.callBack.IRequestCallBack;
 import com.cxyw.suyun.common.net.model.ErrorObj;
 import com.lyc.schedulebox.common.AppConstants;
 import com.lyc.schedulebox.logic.IAddScheduleInteractor;
+import com.lyc.schedulebox.logic.IAnalysisInteractor;
 import com.lyc.schedulebox.logic.IScheduleInteractor;
 import com.lyc.schedulebox.logic.listener.AddScheduleListener;
+import com.lyc.schedulebox.logic.listener.GetAnalysisScheduleListener;
 import com.lyc.schedulebox.logic.listener.GetScheduleListener;
 import com.lyc.schedulebox.logic.listener.ModifyStatusListener;
+import com.lyc.schedulebox.logic.model.AnalysisScheduleListModel;
 import com.lyc.schedulebox.logic.model.BaseModel;
 import com.lyc.schedulebox.logic.model.ScheduleListBean;
 import com.lyc.schedulebox.utils.ModelUtils;
@@ -21,7 +24,7 @@ import java.util.List;
 /**
  * Created by lianyuchen on 16/3/8.
  */
-public class ScheduleInteractorImpl implements IScheduleInteractor, IAddScheduleInteractor {
+public class ScheduleInteractorImpl implements IAnalysisInteractor, IScheduleInteractor, IAddScheduleInteractor {
 
     @Override
     public void getSchedule(String userId, String scheduleStartTime, String scheduleEndTime, final GetScheduleListener listener) {
@@ -110,5 +113,28 @@ public class ScheduleInteractorImpl implements IScheduleInteractor, IAddSchedule
                 listener.addFailed(obj);
             }
         }, BaseModel.class);
+    }
+
+    @Override
+    public void getAnalysisScheduleById(String userId, final GetAnalysisScheduleListener listener) {
+        RequestParams params = new RequestParams();
+        params.setRequestString("userId",userId);
+        NetworkHelper.getInstance().post(AppConstants.URL_ANALYSIS_SCHEDULE, params, new IRequestCallBack<AnalysisScheduleListModel>() {
+            @Override
+            public void onSuccess(AnalysisScheduleListModel result) {
+                listener.getAnalysisScheduleListSuccess(result.getObj().getList());
+            }
+
+            @Override
+            public void onError(ErrorObj obj) {
+                listener.getAnalysisScheduleListError(obj);
+            }
+
+            @Override
+            public void onFailed(ErrorObj obj) {
+                listener.getAnalysisScheduleListFailed(obj);
+            }
+        }, AnalysisScheduleListModel.class);
+
     }
 }

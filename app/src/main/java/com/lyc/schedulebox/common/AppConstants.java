@@ -39,5 +39,6 @@ public class AppConstants {
     public final static String URL_USER_REGISTER = WEB_HOST + "/UserRegisterServlet";
     public final static String URL_MODIFY_SCHEDULE_STATUS = WEB_HOST + "/ModifyScheduleStatusServlet";
     public final static String URL_MODIFY_USER_PHOTO = WEB_HOST + "/UserUploadPhotoServlet";
+    public final static String URL_ANALYSIS_SCHEDULE = WEB_HOST + "/AnalysisScheduleServlet";
 
 }
