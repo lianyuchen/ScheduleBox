@@ -25,6 +25,7 @@ import com.lyc.schedulebox.presenter.IUploadPhotoPresenter;
 import com.lyc.schedulebox.presenter.IUserLogoutPresenter;
 import com.lyc.schedulebox.presenter.impl.UserPresenterImpl;
 import com.lyc.schedulebox.ui.activity.LoginActivity;
+import com.lyc.schedulebox.ui.activity.ModifyUserInfoActivity;
 import com.lyc.schedulebox.utils.SharedPreferenceUtils;
 import com.lyc.schedulebox.utils.UtilsImageProcess;
 import com.lyc.schedulebox.utils.logutils.LogUtils;
@@ -168,24 +169,26 @@ public class UserFragment extends BaseFragment implements IUserFragView {
 //                getAlbum.setType("image/*");
 //                startActivityForResult(getAlbum, PHOTO_REQUEST_GALLERY);
 
-                Intent cameraintent = new Intent(
+                Intent cameraintent1 = new Intent(
                         MediaStore.ACTION_IMAGE_CAPTURE);
                 // 指定调用相机拍照后照片的储存路径
-                cameraintent.putExtra(MediaStore.EXTRA_OUTPUT,
+                cameraintent1.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(tempFile));
-                startActivityForResult(cameraintent,
+                startActivityForResult(cameraintent1,
                         CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
                 break;
             case R.id.layout_take_picture_hint:
-                Intent intent = new Intent(
+                Intent cameraintent2 = new Intent(
                         MediaStore.ACTION_IMAGE_CAPTURE);
                 // 指定调用相机拍照后照片的储存路径
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                cameraintent2.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(tempFile));
-                startActivityForResult(intent,
+                startActivityForResult(cameraintent2,
                         CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
                 break;
             case R.id.ll_user_info:
+                Intent intent = new Intent(getActivity(), ModifyUserInfoActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll_my_friend:
                 break;

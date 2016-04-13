@@ -59,4 +59,6 @@ dependencies {
     compile files('src/lib/open_sdk_r5509.jar')
     compile files('src/lib/weibosdk.jar')
     compile files('src/lib/weibosdkcore.jar')
+    compile 'com.github.blackfizz:eazegraph:1.2.2@aar'
+    compile 'com.nineoldandroids:library:2.4.0'
 }
