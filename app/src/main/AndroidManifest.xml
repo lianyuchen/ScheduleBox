@@ -63,7 +63,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".ui.activity.RegisterActivity" />
-        <activity android:name=".ui.activity.ModifyUserInfoActivity"></activity>
+        <activity android:name=".ui.activity.ModifyUserInfoActivity" />
+        <activity android:name=".ui.activity.AnalysisScheduleActivity"></activity>
     </application>
 
 </manifest>

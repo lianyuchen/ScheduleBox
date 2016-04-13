@@ -24,6 +24,7 @@ import com.lyc.schedulebox.common.AppConstants;
 import com.lyc.schedulebox.presenter.IUploadPhotoPresenter;
 import com.lyc.schedulebox.presenter.IUserLogoutPresenter;
 import com.lyc.schedulebox.presenter.impl.UserPresenterImpl;
+import com.lyc.schedulebox.ui.activity.AnalysisScheduleActivity;
 import com.lyc.schedulebox.ui.activity.LoginActivity;
 import com.lyc.schedulebox.ui.activity.ModifyUserInfoActivity;
 import com.lyc.schedulebox.utils.SharedPreferenceUtils;
@@ -187,8 +188,8 @@ public class UserFragment extends BaseFragment implements IUserFragView {
                         CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
                 break;
             case R.id.ll_user_info:
-                Intent intent = new Intent(getActivity(), ModifyUserInfoActivity.class);
-                startActivity(intent);
+                Intent infoIntent = new Intent(getActivity(), ModifyUserInfoActivity.class);
+                startActivity(infoIntent);
                 break;
             case R.id.ll_my_friend:
                 break;
@@ -197,6 +198,9 @@ public class UserFragment extends BaseFragment implements IUserFragView {
             case R.id.ll_my_mind:
                 break;
             case R.id.ll_analysis:
+
+                Intent analysisIntent = new Intent(getActivity(), AnalysisScheduleActivity.class);
+                startActivity(analysisIntent);
                 break;
         }
     }
