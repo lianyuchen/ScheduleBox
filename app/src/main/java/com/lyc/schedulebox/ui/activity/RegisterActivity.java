@@ -57,8 +57,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterView{
 
     @Override
     public String getUserPwd() {
-        if (!TextUtils.isEmpty(etUsername.getText().toString().trim())){
-            return etUsername.getText().toString().trim();
+        if (!TextUtils.isEmpty(etPassword.getText().toString().trim())){
+            return etPassword.getText().toString().trim();
         }
         return null;
     }

@@ -7,9 +7,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
+import com.cxyw.suyun.common.net.impl.MyVolley;
 import com.lyc.schedulebox.R;
+import com.lyc.schedulebox.common.AppConstants;
 import com.lyc.schedulebox.logic.model.MindListModel;
+import com.lyc.schedulebox.utils.logutils.LogUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,8 +59,8 @@ public class ShowMindListAdapter extends BaseAdapter {
                     R.layout.listview_mind_item, null);
             holder = new ViewHolder();
             // 从convertView中找出listview中每一项内容里的组件，这里包括ImageView，两个TextView
-//            holder.iv = (ImageView) convertView
-//                    .findViewById(R.id.act_show_hotel_msg_iv_pic);
+            holder.iv = (NetworkImageView) convertView
+                    .findViewById(R.id.iv_user_icon);
             holder.tvUsername = (TextView) convertView
                     .findViewById(R.id.tv_username);
             holder.tvContent = (TextView) convertView
@@ -68,10 +75,28 @@ public class ShowMindListAdapter extends BaseAdapter {
         // 为holder的控件绑定数据/////////////////////
         // 获取当前位置的数据
         MindListModel.ObjEntity.ListEntity currentData = data.get(position);
+        String imgUrl = AppConstants.BASE_URI_UPLOAD_PHOTO +
+                "/" + currentData.getUserBean().getUserPhote();
+
+        LogUtils.i("imgUrl" + imgUrl);
+        if (imgUrl != null && !imgUrl.equals("")) {
+            holder.iv.setDefaultImageResId(R.mipmap.ic_launcher);
+            holder.iv.setErrorImageResId(R.mipmap.ic_launcher);
+            holder.iv.setImageUrl(imgUrl, MyVolley.getInstance().getImageLoader());
+        }
+
 //        holder.iv.setImageResource(R.drawable.img_bg);
-        holder.tvUsername.setText(currentData.getUserBean().getUserId() + "");
+        holder.tvUsername.setText(currentData.getUserBean().getUserName());
         holder.tvContent.setText(currentData.getMindContent());
-        holder.tvPubTime.setText(currentData.getMindPubTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = sdf.parse(currentData.getMindPubTime());
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        holder.tvPubTime.setText(sdf.format(date));
         // //////////////
         // 加载远程图片
 //        System.out.println(">>>>----" + currentData.getHotelPic());
@@ -95,7 +120,7 @@ public class ShowMindListAdapter extends BaseAdapter {
 
     static class ViewHolder {
         // 仅仅需要声明ListView的一个item里面所需要使用的控件
-//        ImageView iv;
+        NetworkImageView iv;
         TextView tvUsername;
         TextView tvContent;
         TextView tvPubTime;

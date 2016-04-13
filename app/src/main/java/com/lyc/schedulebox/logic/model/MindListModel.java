@@ -19,10 +19,10 @@ public class MindListModel extends BaseModel{
 
     public static class ObjEntity {
         /**
-         * mindContent : 阿里斯顿我aksjd; 阿斯达斯fkeiug是看电视
-         * mindId : 6
-         * mindPubTime : 2016-04-06 01:24:21.0
-         * userBean : {"userId":24}
+         * mindContent : 公关部男男女女男男女女
+         * mindId : 18
+         * mindPubTime : 2016-04-12 10:29:15.0
+         * userBean : {"userId":3,"userName":"admin","userPhote":"IMG_20160412_164013.jpeg"}
          */
 
         private List<ListEntity> list;
@@ -40,7 +40,9 @@ public class MindListModel extends BaseModel{
             private int mindId;
             private String mindPubTime;
             /**
-             * userId : 24
+             * userId : 3
+             * userName : admin
+             * userPhote : IMG_20160412_164013.jpeg
              */
 
             private UserBeanEntity userBean;
@@ -79,6 +81,8 @@ public class MindListModel extends BaseModel{
 
             public static class UserBeanEntity {
                 private int userId;
+                private String userName;
+                private String userPhote;
 
                 public int getUserId() {
                     return userId;
@@ -86,6 +90,22 @@ public class MindListModel extends BaseModel{
 
                 public void setUserId(int userId) {
                     this.userId = userId;
+                }
+
+                public String getUserName() {
+                    return userName;
+                }
+
+                public void setUserName(String userName) {
+                    this.userName = userName;
+                }
+
+                public String getUserPhote() {
+                    return userPhote;
+                }
+
+                public void setUserPhote(String userPhote) {
+                    this.userPhote = userPhote;
                 }
             }
         }

@@ -44,9 +44,10 @@ public class UserInteractorImpl implements IUploadPhotoInteractor, IUserRegister
         NetworkHelper.getInstance().post(AppConstants.URL_GET_USER_INFO, params, new IRequestCallBack<UserInfoModel>() {
             @Override
             public void onSuccess(UserInfoModel result) {
-                LogUtils.i("UserInteractorImpl",result);
+                LogUtils.i(result.getObj());
                 SharedPreferenceUtils.putValue(context,"login_info","username",result.getObj().getUserName());
                 SharedPreferenceUtils.putValue(context,"login_info","password",result.getObj().getUserPwd());
+                SharedPreferenceUtils.putValue(context,"login_info","photo",result.getObj().getUserPhote());
                 SharedPreferenceUtils.putValue(context,"login_info","uuid",result.getObj().getUserUUID());
                 SharedPreferenceUtils.putValue(context,"login_info","userId",result.getObj().getUserId());
                 SharedPreferenceUtils.putValue(context,"login_info","isLogin",true);
@@ -107,7 +108,7 @@ public class UserInteractorImpl implements IUploadPhotoInteractor, IUserRegister
         NetworkHelper.getInstance().request(AppConstants.URL_MODIFY_USER_PHOTO, "123.jpeg", new File(uri), params, new IRequestCallBack<FileModel>() {
             @Override
             public void onSuccess(FileModel result) {
-                LogUtils.i(result);
+                LogUtils.i(result.getObj().getFilePath());
                 listener.uploadPhotoSuccess();
             }
 

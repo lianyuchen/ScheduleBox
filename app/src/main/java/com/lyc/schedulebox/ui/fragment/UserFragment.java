@@ -13,12 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.NetworkImageView;
+import com.cxyw.suyun.common.net.impl.MyVolley;
 import com.lyc.schedulebox.R;
+import com.lyc.schedulebox.common.AppConstants;
 import com.lyc.schedulebox.presenter.IUploadPhotoPresenter;
 import com.lyc.schedulebox.presenter.IUserLogoutPresenter;
 import com.lyc.schedulebox.presenter.impl.UserPresenterImpl;
@@ -49,7 +51,7 @@ public class UserFragment extends BaseFragment implements IUserFragView {
     @Bind(R.id.tv_user_gender)
     TextView tvUserGender;
     @Bind(R.id.iv_user_icon)
-    ImageView ivUserIcon;
+    NetworkImageView ivUserIcon;
     @Bind(R.id.ll_user_info)
     LinearLayout llUserInfo;
     @Bind(R.id.ll_my_friend)
@@ -93,6 +95,14 @@ public class UserFragment extends BaseFragment implements IUserFragView {
         mUserLogoutPresenter = new UserPresenterImpl(this);
         if (null != SharedPreferenceUtils.getSharedPreferences(getActivity(), "login_info")) {
             if (SharedPreferenceUtils.getValue(getActivity(), "login_info", "isLogin", false)) {
+
+                if (!"".equals(SharedPreferenceUtils.getValue(getActivity(),"login_info","photo",""))){
+                    layoutTakePictureHint.setVisibility(View.GONE);
+                    ivUserIcon.setVisibility(View.VISIBLE);
+                    ivUserIcon.setImageUrl(AppConstants.BASE_URI_UPLOAD_PHOTO +
+                            "/" + SharedPreferenceUtils.getValue(getActivity(),"login_info","photo",""), MyVolley.getInstance().getImageLoader());
+                }
+
                 tvUsername.setText(SharedPreferenceUtils.getValue(getActivity(), "login_info", "username", ""));
                 tvUserGender.setText(SharedPreferenceUtils.getValue(getActivity(), "login_info", "phone", ""));
             } else {

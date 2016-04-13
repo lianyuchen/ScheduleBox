@@ -28,7 +28,9 @@ public class AppConstants {
     /**
      * 阿里云服务器地址：139.129.46.64
      */
+
     public final static String WEB_HOST = "http://139.129.46.64:8080/ScheduleBoxServer_war";
+    public final static String BASE_URI_UPLOAD_PHOTO = WEB_HOST + "/user/photo";
     public final static String URL_GET_SCHEDULE_LIST = WEB_HOST + "/SearchScheduleByTimeServlet";
     public final static String URL_GET_USER_INFO = WEB_HOST + "/UserLoginServlet";
     public final static String URL_ADD_SCHEDULE = WEB_HOST + "/SubmitScheduleServlet";

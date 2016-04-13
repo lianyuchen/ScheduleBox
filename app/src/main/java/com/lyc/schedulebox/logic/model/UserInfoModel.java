@@ -5,11 +5,13 @@ package com.lyc.schedulebox.logic.model;
  */
 public class UserInfoModel extends BaseModel {
 
+
     /**
-     * userId : 1
-     * userName : lianyuchen
-     * userPwd : 123456
-     * userUUID : 363b36c4-ecf1-4792-aadb-467833f90694
+     * userId : 3
+     * userName : admin
+     * userPhote : IMG_20160412_213435.jpeg
+     * userPwd : admin
+     * userUUID : ec454912-7824-4f18-b9ba-3cb25a5b49cc
      */
 
     private ObjEntity obj;
@@ -25,6 +27,7 @@ public class UserInfoModel extends BaseModel {
     public static class ObjEntity {
         private int userId;
         private String userName;
+        private String userPhote;
         private String userPwd;
         private String userUUID;
 
@@ -42,6 +45,14 @@ public class UserInfoModel extends BaseModel {
 
         public void setUserName(String userName) {
             this.userName = userName;
+        }
+
+        public String getUserPhote() {
+            return userPhote;
+        }
+
+        public void setUserPhote(String userPhote) {
+            this.userPhote = userPhote;
         }
 
         public String getUserPwd() {
