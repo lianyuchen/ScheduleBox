@@ -1,2 +1,2 @@
-include ':app', ':WeekView_library', ':common'
+include ':app', ':WeekView_library', ':common', 'PushSDK'
 

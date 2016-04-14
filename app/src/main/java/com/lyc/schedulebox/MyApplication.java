@@ -1,6 +1,7 @@
 package com.lyc.schedulebox;
 
 import android.content.Context;
+import android.os.Handler;
 
 import com.cxyw.suyun.common.utils.CommonApplication;
 import com.lyc.schedulebox.common.AppConstants;
@@ -8,6 +9,9 @@ import com.sina.weibo.sdk.auth.WeiboAuth;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.tauth.Tencent;
+import com.umeng.common.message.Log;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -27,6 +31,7 @@ public class MyApplication extends CommonApplication {
     public static Tencent mTencent;
 
     public static WeiboAuth mWeiboAuth;
+    private PushAgent mPushAgent;
 
     @Override
     public void onCreate() {
@@ -34,6 +39,22 @@ public class MyApplication extends CommonApplication {
         super.onCreate();
         app = this;
         mContext = getApplicationContext();
+        mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.setDebugMode(true);
+        //开启推送并设置注册的回调处理
+        mPushAgent.enable(new IUmengRegisterCallback() {
+
+            @Override
+            public void onRegistered(final String registrationId) {
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //onRegistered方法的参数registrationId即是device_token
+                        Log.d("device_token", registrationId);
+                    }
+                });
+            }
+        });
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/HYQiH2312F45.ttf")
                 .setFontAttrId(R.attr.fontPath)
